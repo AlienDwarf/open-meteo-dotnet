@@ -1,6 +1,7 @@
 
 # 🌡️🌤️ Open-Meteo Dotnet Library
 ![GitHub](https://img.shields.io/github/license/AlienDwarf/open-meteo-dotnet)
+![Nuget](https://img.shields.io/nuget/v/openmeteo.dotnet)
 
 A .Net Standard 2.1 library for the [Open-Meteo](https://open-meteo.com) API.
 
@@ -8,6 +9,31 @@ A .Net Standard 2.1 library for the [Open-Meteo](https://open-meteo.com) API.
 
 This project is still in development. There will be major changes in the codebase.
 
+
+## 🔨 Installation/Build
+
+### NuGet
+[NuGet Package](https://www.nuget.org/packages/OpenMeteo.dotnet/)
+
+Use NuGet Package Manager GUI. Or use NuGet CLI:
+
+```bash
+dotnet add package OpenMeteo.dotnet
+```
+
+### Build
+Alternatively you can build this library on your own.
+
+1. Clone this repo:
+```bash
+git clone https://github.com/AlienDwarf/open-meteo-dotnet
+```
+
+2. Open the project and build it. The build process will create a .dll file in ```/bin/[CONFIGURATION]/netstandard2.1/```
+
+3. Add a reference in your own project to the .dll in your own project.
+
+4. Add ```using OpenMeteo;``` to your class.
 
 ## 💻 Usage
 
