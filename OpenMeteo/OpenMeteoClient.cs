@@ -46,6 +46,23 @@ namespace OpenMeteo
             return await GetWeatherForecastAsync(options);
         }
 
+        public async Task<WeatherForecast?> QueryAsync(GeocodingOptions options)
+        {
+            // Get City Information
+            GeocodingApiResponse? response = await GetCityGeocodingDataAsync(options);
+            if (response == null || response.Cities == null)
+                return null;
+
+            WeatherForecastOptions weatherForecastOptions = new WeatherForecastOptions
+            {
+                Latitude = response.Cities[0].Latitude,
+                Longitude = response.Cities[0].Longitude,
+                Current_Weather = true
+            };
+
+            return await GetWeatherForecastAsync(weatherForecastOptions);
+        }
+
         public async Task<WeatherForecast?> QueryAsync(WeatherForecastOptions options)
         {
             try
