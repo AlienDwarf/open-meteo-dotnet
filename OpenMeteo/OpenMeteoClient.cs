@@ -6,12 +6,19 @@ using System.Text.Json;
 
 namespace OpenMeteo
 {
+    /// <summary>
+    /// Handles GET Requests and performs API Calls.
+    /// </summary>
     public class OpenMeteoClient
     {
         private readonly string _weatherApiUrl = "https://api.open-meteo.com/v1/forecast";
         private readonly string _geocodeApiUrl = "https://geocoding-api.open-meteo.com/v1/search";
         private readonly HttpController httpController;
         private readonly System.Globalization.CultureInfo _culture;
+
+        /// <summary>
+        /// Creates a new <seealso cref="OpenMeteoClient"/> object and sets the neccessary variables (httpController, CultureInfo)
+        /// </summary>
         public OpenMeteoClient()
         {
             httpController = new HttpController();
@@ -22,11 +29,20 @@ namespace OpenMeteo
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
             System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
         }
+
+        /// <summary>
+        /// Restores the original CultureInfo
+        /// </summary>
         ~OpenMeteoClient()
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = _culture;
         }
 
+        /// <summary>
+        /// Performs two GET-Requests (first geocoding api for latitude,longitude, then weather forecast)
+        /// </summary>
+        /// <param name="city">Name of city</param>
+        /// <returns>If successful returns an awaitable Task containing WeatherForecast or NULL if request failed</returns>
         public async Task<WeatherForecast?> QueryAsync(string city)
         {
             GeocodingOptions geocodingOptions = new GeocodingOptions(city);
@@ -46,6 +62,11 @@ namespace OpenMeteo
             return await GetWeatherForecastAsync(options);
         }
 
+        /// <summary>
+        /// Performs two GET-Requests (first geocoding api for latitude,longitude, then weather forecast)
+        /// </summary>
+        /// <param name="options">Geocoding options</param>
+        /// <returns>If successful awaitable <see cref="Task"/> or NULL</returns>
         public async Task<WeatherForecast?> QueryAsync(GeocodingOptions options)
         {
             // Get City Information
@@ -63,6 +84,11 @@ namespace OpenMeteo
             return await GetWeatherForecastAsync(weatherForecastOptions);
         }
 
+        /// <summary>
+        /// Performs one GET-Request
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns>Awaitable Task containing WeatherForecast or NULL</returns>
         public async Task<WeatherForecast?> QueryAsync(WeatherForecastOptions options)
         {
             try
@@ -75,6 +101,12 @@ namespace OpenMeteo
             }
         }
 
+        /// <summary>
+        /// Performs one GET-Request to get weather information
+        /// </summary>
+        /// <param name="latitude">City latitude</param>
+        /// <param name="longitude">City longitude</param>
+        /// <returns>Awaitable Task containing WeatherForecast or NULL</returns>
         public async Task<WeatherForecast?> QueryAsync(float latitude, float longitude)
         {
             WeatherForecastOptions options = new WeatherForecastOptions
@@ -86,6 +118,11 @@ namespace OpenMeteo
             return await QueryAsync(options);
         }
 
+        /// <summary>
+        /// Performs one GET-Request to Open-Meteo Geocoding API 
+        /// </summary>
+        /// <param name="city">Name of city</param>
+        /// <returns></returns>
         public async Task<GeocodingApiResponse?> GetCityGeocodingDataAsync(string city)
         {
             GeocodingOptions geocodingOptions = new GeocodingOptions(city);
@@ -98,6 +135,11 @@ namespace OpenMeteo
             return await GetGeocodingDataAsync(options);
         }
 
+        /// <summary>
+        /// Performs one GET-Request to get a (float, float) tuple
+        /// </summary>
+        /// <param name="city">Name of city</param>
+        /// <returns>(latitude, longitude) tuple</returns>
         public async Task<(float latitude, float longitude)?> GetCityLatitudeLongitudeAsync(string city)
         {
             GeocodingApiResponse? response = await GetCityGeocodingDataAsync(city);
@@ -106,6 +148,11 @@ namespace OpenMeteo
             return (response.Cities[0].Latitude, response.Cities[0].Longitude);
         }
 
+        /// <summary>
+        /// Converts a given weathercode to it's string representation
+        /// </summary>
+        /// <param name="weathercode"></param>
+        /// <returns><see cref="string"/> Weathercode string representation</returns>
         public string WeathercodeToString(int weathercode)
         {
             switch (weathercode)
