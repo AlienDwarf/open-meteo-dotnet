@@ -44,6 +44,7 @@ namespace OpenMeteo
             Precipitation_Unit = "mm";
             Timeformat = "iso8601";
             Timezone = "auto";
+            Current_Weather = true;
         }
         public WeatherForecastOptions()
         {
@@ -54,6 +55,7 @@ namespace OpenMeteo
             Precipitation_Unit = "mm";
             Timeformat = "iso8601";
             Timezone = "auto";
+            Current_Weather = true;
         }
     }
 }
