@@ -1,5 +1,6 @@
 
 # 🌡️🌤️ Open-Meteo Dotnet Library
+[![build and test](https://github.com/AlienDwarf/open-meteo-dotnet/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/AlienDwarf/open-meteo-dotnet/actions/workflows/build-and-test.yml)
 [![GitHub license](https://img.shields.io/github/license/AlienDwarf/open-meteo-dotnet)](https://github.com/AlienDwarf/open-meteo-dotnet/blob/master/LICENSE.txt)
 [![Nuget](https://img.shields.io/nuget/v/openmeteo.dotnet)](https://www.nuget.org/packages/OpenMeteo.dotnet)
 
