@@ -83,7 +83,7 @@ static async Task RunAsync()
     // Output: "Weather in Tokyo: 28.1°C
 }
 ```
-### Getting Geocoding API data and reuse it for weatherforecast:
+### Getting Geocoding API data and reuse it for weather forecast:
 ```c#
 using OpenMeteo;
 
