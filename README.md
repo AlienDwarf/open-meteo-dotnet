@@ -9,6 +9,10 @@ A .Net Standard 2.1 library for the [Open-Meteo](https://open-meteo.com) API.
 
 This project is still in development. There will be major changes in the codebase.
 
+## 🎯 Roadmap
+- Documentation
+- Unit tests
+
 
 ## 🔨 Installation/Build
 
