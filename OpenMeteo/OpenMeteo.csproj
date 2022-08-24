@@ -3,9 +3,33 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <PackageId>$(AssemblyName).cs</PackageId>
-    <Title>Open Meteo C# Library</Title>
+    <PackageId>$(AssemblyName).dotnet</PackageId>
+    <Title>Open Meteo Dotnet Library</Title>
+    <Version>0.0.1</Version>
+    <Authors>AlienDwarf</Authors>
+    <Company />
+    <Product>$(AssemblyName) Dotnet Library</Product>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/AlienDwarf/open-meteo-dotnet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>OpenMeteo, Weather, Forecast, Meteorology, Api, Geodata, Weathercode</PackageTags>
+    <Copyright>Copyright © 2022 AlienDwarf</Copyright>
+    <AssemblyVersion>0.0.1</AssemblyVersion>
+    <FileVersion>0.0.1</FileVersion>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <Description>A .Net Standard 2.1 library for the Open-Meteo.com API.</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="6.0.5" />
