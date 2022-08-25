@@ -32,7 +32,7 @@ namespace OpenMeteo
         public string Precipitation_Unit { get; set; }
 
         /// <summary>
-        /// Default is "auto". Any time zone name from the time zone database is supported.
+        /// Default is "GMT". Any time zone name from the time zone database is supported.
         /// </summary>
         public string Timezone { get; set; }
 
@@ -83,7 +83,7 @@ namespace OpenMeteo
             Windspeed_Unit = "kmh";
             Precipitation_Unit = "mm";
             Timeformat = "iso8601";
-            Timezone = "auto";
+            Timezone = "GMT";
             Current_Weather = true;
         }
         public WeatherForecastOptions()
@@ -94,7 +94,7 @@ namespace OpenMeteo
             Windspeed_Unit = "kmh";
             Precipitation_Unit = "mm";
             Timeformat = "iso8601";
-            Timezone = "auto";
+            Timezone = "GMT";
             Current_Weather = true;
         }
     }
