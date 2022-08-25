@@ -5,6 +5,9 @@ using System.Net.Http;
 
 namespace OpenMeteo
 {
+    /// <summary>
+    /// This class automatically sets the header 'Content-Type" and performs all of the api calls
+    /// </summary>
     internal class HttpController
     {
         public HttpClient Client { get { return _httpClient; } }
