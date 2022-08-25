@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMeteo;
 using System.Text.Json;
@@ -5,7 +6,7 @@ using System.Text.Json;
 namespace OpenMeteoTests
 {
     [TestClass]
-    public class WeatherOptionsTests
+    public class WeatherForecastOptionsTests
     {
         [TestMethod]
         public void Empty_WeatherForecastOptions_Test()
@@ -76,6 +77,26 @@ namespace OpenMeteoTests
             Assert.IsTrue(options.Hourly.Count == 2);
             Assert.IsTrue(options.Hourly.Contains("cloudcover_low"));
             Assert.IsTrue(options.Hourly.Contains("cloudcover_high"));
+        }
+        [TestMethod]
+        public void Daily_All_Hourly_All_Test()
+        {
+            var options = new WeatherForecastOptions(10.5f, 20f);
+            options.Daily = DailyOptions.All;
+            options.Hourly = HourlyOptions.All;
+
+            Assert.IsTrue(options.Daily.Count > 0);
+            Assert.IsTrue(options.Hourly.Count > 0);
+            
+            foreach(string s in DailyOptions.All)
+            {
+                Assert.IsTrue(options.Daily.Contains(s));
+            }
+
+            foreach (string s in HourlyOptions.All)
+            {
+                Assert.IsTrue(options.Hourly.Contains(s));
+            }
         }
     }
 }
