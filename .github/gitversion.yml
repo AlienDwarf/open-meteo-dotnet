@@ -1,0 +1,8 @@
+mode: Mainline
+branches:
+  develop:
+    regex: ^dev(elop)?(ment)?$
+    tag: alpha
+  main: {}
+ignore:
+  sha: []
