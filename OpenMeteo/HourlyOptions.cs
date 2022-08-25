@@ -9,7 +9,10 @@ namespace OpenMeteo
     {
         public static HourlyOptions All { get { return new HourlyOptions(_allHourlyParams); } }
 
-        public List<string> Parameter { get { return parameter; } }
+        /// <summary>
+        /// A copy of the current applied parameter. This is a COPY. Editing anything inside this copy won't be applied 
+        /// </summary>
+        public List<string> Parameter { get { return new List<string>(parameter); } }
 
         private static readonly string[] _allHourlyParams = new string[]
         {
@@ -60,8 +63,8 @@ namespace OpenMeteo
                     continue;
                 this.parameter.Add(s);
             }
-
         }
+
         public HourlyOptions(string parameter)
         {
             string s = parameter.ToLower();
@@ -70,14 +73,14 @@ namespace OpenMeteo
             this.parameter.Add(s);
         }
 
-        public HourlyOptions(HourlyOptionsType parameter)
+        public HourlyOptions(HourlyOptionsParameter parameter)
         {
             bool result = Add(parameter);
             if (!result)
                 throw new ArgumentException();
         }
 
-        public HourlyOptions(HourlyOptionsType[] parameter)
+        public HourlyOptions(HourlyOptionsParameter[] parameter)
         {
             bool result = Add(parameter);
             if (!result)
@@ -89,7 +92,7 @@ namespace OpenMeteo
 
         }
 
-        public bool Add(HourlyOptionsType param)
+        public bool Add(HourlyOptionsParameter param)
         {
             // Each enum variable represents an integer starting with 0.
             // So we can use our static string[] to get the string representation
@@ -106,9 +109,9 @@ namespace OpenMeteo
             return true;
         }
 
-        public bool Add(HourlyOptionsType[] param)
+        public bool Add(HourlyOptionsParameter[] param)
         {
-            foreach (HourlyOptionsType paramToAdd in param)
+            foreach (HourlyOptionsParameter paramToAdd in param)
             {
                 if (!Add(paramToAdd))
                     return false;
@@ -129,7 +132,7 @@ namespace OpenMeteo
         }
     }
 
-    public enum HourlyOptionsType
+    public enum HourlyOptionsParameter
     {
         temperature_2m,
         relativehumidity_2m,
