@@ -11,7 +11,7 @@ namespace OpenMeteoTests
         [TestMethod]
         public void Empty_WeatherForecastOptions_Test()
         {
-            WeatherForecastOptions options = new WeatherForecastOptions();
+            WeatherForecastOptions options = new();
 
             Assert.IsNotNull(options);
             Assert.IsTrue(options.Current_Weather);
@@ -71,8 +71,8 @@ namespace OpenMeteoTests
             Assert.IsTrue(options.Daily.Parameter.Contains("sunrise"));
             Assert.IsTrue(options.Daily.Parameter.Contains("sunset"));
 
-            options.Hourly.Add(HourlyOptionsType.cloudcover_low);
-            options.Hourly.Add(HourlyOptionsType.cloudcover_high);
+            options.Hourly.Add(HourlyOptionsParameter.cloudcover_low);
+            options.Hourly.Add(HourlyOptionsParameter.cloudcover_high);
 
             Assert.IsTrue(options.Hourly.Parameter.Count == 2);
             Assert.IsTrue(options.Hourly.Parameter.Contains("cloudcover_low"));
