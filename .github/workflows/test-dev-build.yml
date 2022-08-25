@@ -3,6 +3,7 @@ name: Test Development Build
 on:
   push:
     branches:
+      - '**'
       - '!master'
     paths:
     - '**/*.cs'
