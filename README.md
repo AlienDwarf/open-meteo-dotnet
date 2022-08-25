@@ -4,7 +4,7 @@
 [![GitHub license](https://img.shields.io/github/license/AlienDwarf/open-meteo-dotnet)](https://github.com/AlienDwarf/open-meteo-dotnet/blob/master/LICENSE.txt)
 [![Nuget](https://img.shields.io/nuget/v/openmeteo.dotnet)](https://www.nuget.org/packages/OpenMeteo.dotnet)
 
-A .Net Standard 2.1 library for the [Open-Meteo](https://open-meteo.com) API.
+A .Net Standard library for the [Open-Meteo](https://open-meteo.com) API.
 ## ❕ Information
 
 This project is still in development. There will be major changes in the codebase.
