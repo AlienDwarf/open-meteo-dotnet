@@ -4,8 +4,8 @@ on:
   push:
     branches: [ master ]
     paths:
-    - '**/*.cs'
-    - '**/*.csproj'
+    #- '**/*.cs'
+    #- '**/*.csproj'
   pull_request:
     branches: [ master ]
     paths:
@@ -25,11 +25,19 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v2
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - uses: actions/cache@v3
+    - name: Caching
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget
 
     - name: Install dependencies
       run: dotnet restore
