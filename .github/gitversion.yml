@@ -3,6 +3,7 @@ branches:
   develop:
     regex: ^dev(elop)?(ment)?$
     tag: alpha
+    increment: Patch
   main: {}
 ignore:
   sha: []
