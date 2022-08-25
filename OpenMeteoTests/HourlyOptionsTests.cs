@@ -20,7 +20,16 @@ namespace OpenMeteoTests
             options.Add(HourlyOptionsParameter.winddirection_80m);
             Assert.AreEqual(1, options.Parameter.Count);
             Assert.IsTrue(options.Parameter.Contains("winddirection_80m"));
-            Assert.IsFalse(options.Add(HourlyOptionsParameter.winddirection_80m));
+            
+        }
+
+        [TestMethod]
+        public void HourlyOptions_Add_Existing_Parameter_Test()
+        {
+            var options = new HourlyOptions();
+
+            options.Add(HourlyOptionsParameter.soil_moisture_3_9cm);
+            Assert.IsFalse(options.Add(HourlyOptionsParameter.soil_moisture_3_9cm));
         }
 
         [TestMethod]
