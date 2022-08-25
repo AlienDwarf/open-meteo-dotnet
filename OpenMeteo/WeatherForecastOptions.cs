@@ -6,16 +6,56 @@ namespace OpenMeteo
 {
     public class WeatherForecastOptions
     {
+        /// <summary>
+        /// Geographical WGS84 coordinate of the location
+        /// </summary>
         public float Latitude { get; set; }
+
+        /// <summary>
+        /// Geographical WGS84 coordinate of the location
+        /// </summary>
         public float Longitude { get; set; }
+
+        /// <summary>
+        /// Default is "celsius". Use "fahrenheit" to convert temperature to fahrenheit
+        /// </summary>
         public string Temperature_Unit { get; set; }
+
+        /// <summary>
+        /// Default is "kmh". Other options: "ms", "mph", "kn"
+        /// </summary>
         public string Windspeed_Unit { get; set; }
+
+        /// <summary>
+        /// Default is "mm". Other options: "inch"
+        /// </summary>
         public string Precipitation_Unit { get; set; }
+
+        /// <summary>
+        /// Default is "auto". Any time zone name from the time zone database is supported.
+        /// </summary>
         public string Timezone { get; set; }
+
         public HourlyOptions Hourly { get { return _hourly; } set { _hourly = value; } }
         public DailyOptions Daily { get { return _daily; } set { _daily = value; } }
+
+        /// <summary>
+        /// Default is "true".
+        /// Include current weather conditions in API response.
+        /// </summary>
         public bool Current_Weather { get; set; }
+
+        /// <summary>
+        /// Default is "iso8601". Other options: "unixtime". 
+        /// Please note that all timestamp are in GMT+0!
+        /// See https://open-meteo.com/en/docs for more info
+        /// </summary>
         public string Timeformat { get; set; }
+
+        /// <summary>
+        /// Default is "0". Other options: "1", "2"
+        /// </summary>
+        /// <value></value>
         public int Past_Days { get; set; }
 
         private HourlyOptions _hourly = new HourlyOptions();
