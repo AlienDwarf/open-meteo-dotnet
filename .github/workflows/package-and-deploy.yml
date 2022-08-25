@@ -1,8 +1,6 @@
 name: Package and deploy new Release
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
     types:
@@ -10,7 +8,7 @@ on:
 
 jobs:
   build:
-    #if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -37,11 +35,11 @@ jobs:
     - name: Build dotnet 
       run: dotnet build --configuration release /p:Version=${{ steps.gitversion.outputs.AssemblySemVer }} /p:AssemblyVersion=${{ steps.gitversion.outputs.AssemblySemVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.InformationalVersion }} --no-restore
       
-    - name: Run Tests
+    - name: Run tests
       run: dotnet test --configuration Release /p:Version=${{ steps.gitversion.outputs.AssemblySemVer }} --no-build --verbosity normal
       
     - name: Package nuget
       run: dotnet pack --configuration release -o:package /p:PackageVersion=${{ steps.gitversion.outputs.AssemblySemVer }}
 
-    #- name: Push generated package to NuGet.org
-    #  run: dotnet nuget push ./package/*.nupkg --api-key ${{ secrets.API_KEY }} --source https://api.nuget.org/v3/index.json
+    - name: Push generated package to NuGet.org
+      run: dotnet nuget push ./package/*.nupkg --api-key ${{ secrets.API_KEY }} --source https://api.nuget.org/v3/index.json
