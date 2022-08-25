@@ -8,7 +8,7 @@ namespace OpenMeteo
     /// <summary>
     /// Returned by Geocoding Api.
     /// </summary>
-    public class CityData
+    public class LocationData
     {
         /// <summary>
         /// Unique identifier for this exact location
