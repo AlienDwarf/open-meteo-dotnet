@@ -1,14 +1,17 @@
-name: Package and deploy new Release
+name: Package and deploy new release
 
 on:
-  pull_request:
-    branches: [ master ]
-    types:
-    - closed
+  #pull_request:
+  #  branches: [ master ]
+  #  types:
+  #  - closed
+  push:
+    tags:
+      - "*.*.*"
 
 jobs:
   build:
-    if: github.event.pull_request.merged == true
+    #if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +30,14 @@ jobs:
       uses: gittools/actions/gitversion/execute@v0.9.7
       with:
           useConfigFile: true
-          configFilePath: ./.github/gitversion.yml  
+          configFilePath: ./.github/gitversion.yml
+
+    - name: Create Release for Tag
+      uses: yyx990803/release-tag@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.gitversion.outputs.FullSemVer }}
 
     - name: Restore dependencies
       run: dotnet restore

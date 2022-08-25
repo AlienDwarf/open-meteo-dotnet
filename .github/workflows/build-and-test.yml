@@ -13,7 +13,7 @@ on:
     - '**/*.csproj'
 
 env:
-  DOTNET_VERSION: '3.1.x' # The .NET SDK version to use
+  DOTNET_VERSION: '6.x.x' # The .NET SDK version to use
 
 jobs:
   build-and-test:
@@ -25,7 +25,9 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v2
       with:
