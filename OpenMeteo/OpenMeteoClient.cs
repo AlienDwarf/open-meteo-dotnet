@@ -256,7 +256,8 @@ namespace OpenMeteo
             }
         }
 
-        private string MergeUrlWithOptions(string url, GeocodingOptions options)
+        [Obsolete]
+        private string _MergeUrlWithOptions(string url, GeocodingOptions options)
         {
             if (options == null) return url;
 
@@ -309,7 +310,9 @@ namespace OpenMeteo
             // Finally return the whole url in lowercase
             return uri.ToString().ToLower();
         }
-        private string MergeUrlWithOptions(string url, WeatherForecastOptions? options)
+
+        [Obsolete]
+        private string _MergeUrlWithOptions(string url, WeatherForecastOptions? options)
         {
             if (options == null) return url;
 
@@ -378,6 +381,129 @@ namespace OpenMeteo
             }
 
             // Finally return the whole url in lowercase
+            return uri.ToString().ToLower();
+        }
+
+        internal string MergeUrlWithOptions(string url, WeatherForecastOptions? options)
+        {
+            if (options == null) return url;
+
+            UriBuilder uri = new UriBuilder(url);
+            bool isFirstParam = false;
+
+            // If no query given, add '?' to start the query string
+            if (uri.Query == string.Empty)
+            {
+                uri.Query = "?";
+
+                // isFirstParam becomes true because the query string is new
+                isFirstParam = true;
+            }
+
+            // Add the properties
+
+            // Begin with Latitude and Longitude since they're required
+            if (isFirstParam)
+                uri.Query += "latitude=" + options.Latitude;
+            else
+                uri.Query += "&latitude=" + options.Latitude;
+
+            uri.Query += "&longitude=" + options.Longitude;
+
+            if (options.Temperature_Unit != string.Empty)
+                uri.Query += "&temperature_unit=" + options.Temperature_Unit;
+            if (options.Windspeed_Unit != string.Empty)
+                uri.Query += "&windspeed_unit=" + options.Windspeed_Unit;
+            if (options.Precipitation_Unit != string.Empty)
+                uri.Query += "&precipitation_unit=" + options.Precipitation_Unit;
+            if (options.Timezone != string.Empty)
+                uri.Query += "&timezone=" + options.Timezone;
+
+            uri.Query += "&current_weather=" + options.Current_Weather;
+
+            if (options.Timeformat != string.Empty)
+                uri.Query += "&timeformat=" + options.Timeformat;
+
+            uri.Query += "&past_days=" + options.Past_Days;
+
+            // Now we iterate through hourly and daily
+
+            // Hourly
+            if (options.Hourly.Count > 0)
+            {
+                bool firstHourlyElement = true;
+                uri.Query += "&hourly=";
+
+                foreach (string s in options.Hourly)
+                {
+                    if (firstHourlyElement)
+                    {
+                        uri.Query += s;
+                        firstHourlyElement = false;
+                    }
+                    else
+                    {
+                        uri.Query += "," + s;
+                    }
+                }
+            }
+
+            // Daily
+            if (options.Daily.Count > 0)
+            {
+                bool firstDailyElement = true;
+                uri.Query += "&daily=";
+                foreach (string s in options.Daily)
+                {
+                    if (firstDailyElement)
+                    {
+                        uri.Query += s;
+                        firstDailyElement = false;
+                    }
+                    else
+                    {
+                        uri.Query += "," + s;
+                    }
+                }
+            }
+            return uri.ToString();
+        }
+
+        /// <summary>
+        /// Combines a given url with an options object to create a url for GET requests
+        /// </summary>
+        /// <returns>url+queryString</returns>
+        internal string MergeUrlWithOptions(string url, GeocodingOptions options)
+        {
+            if (options == null) return url;
+
+            UriBuilder uri = new UriBuilder(url);
+            bool isFirstParam = false;
+
+            // If no query given, add '?' to start the query string
+            if (uri.Query == string.Empty)
+            {
+                uri.Query = "?";
+
+                // isFirstParam becomes true because the query string is new
+                isFirstParam = true;
+            }
+
+            // Now we check every property and set the value, if neccessary
+            if (isFirstParam)
+                uri.Query += "name=" + options.Name;
+            else
+                uri.Query += "&name=" + options.Name;
+
+            if(options.Count >0)
+                uri.Query += "&count=" + options.Count;
+            
+            if (options.Format != string.Empty)
+                uri.Query += "&format=" + options.Format;
+
+            if (options.Language != string.Empty)
+                uri.Query += "&language=" + options.Language;
+
             return uri.ToString().ToLower();
         }
     }
