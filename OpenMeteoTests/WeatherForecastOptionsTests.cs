@@ -61,22 +61,22 @@ namespace OpenMeteoTests
                 10.5f, 20.5f, "kmh", "fahrenheit", "mm", "auto",
                 new HourlyOptions(), new DailyOptions(), false, "iso8601", 1);
 
-            Assert.IsTrue(options.Daily.Count == 0);
-            Assert.IsTrue(options.Hourly.Count == 0);
+            Assert.IsTrue(options.Daily.Parameter.Count == 0);
+            Assert.IsTrue(options.Hourly.Parameter.Count == 0);
 
-            options.Daily.Add("sunset");
-            options.Daily.Add("sunrise");
+            options.Daily.Add(DailyOptionsType.sunset);
+            options.Daily.Add(DailyOptionsType.sunrise);
 
-            Assert.IsTrue(options.Daily.Count == 2);
-            Assert.IsTrue(options.Daily.Contains("sunrise"));
-            Assert.IsTrue(options.Daily.Contains("sunset"));
+            Assert.IsTrue(options.Daily.Parameter.Count == 2);
+            Assert.IsTrue(options.Daily.Parameter.Contains("sunrise"));
+            Assert.IsTrue(options.Daily.Parameter.Contains("sunset"));
 
-            options.Hourly.Add("cloudcover_low");
-            options.Hourly.Add("cloudcover_high");
+            options.Hourly.Add(HourlyOptionsType.cloudcover_low);
+            options.Hourly.Add(HourlyOptionsType.cloudcover_high);
 
-            Assert.IsTrue(options.Hourly.Count == 2);
-            Assert.IsTrue(options.Hourly.Contains("cloudcover_low"));
-            Assert.IsTrue(options.Hourly.Contains("cloudcover_high"));
+            Assert.IsTrue(options.Hourly.Parameter.Count == 2);
+            Assert.IsTrue(options.Hourly.Parameter.Contains("cloudcover_low"));
+            Assert.IsTrue(options.Hourly.Parameter.Contains("cloudcover_high"));
         }
         [TestMethod]
         public void Daily_All_Hourly_All_Test()
@@ -85,17 +85,17 @@ namespace OpenMeteoTests
             options.Daily = DailyOptions.All;
             options.Hourly = HourlyOptions.All;
 
-            Assert.IsTrue(options.Daily.Count > 0);
-            Assert.IsTrue(options.Hourly.Count > 0);
+            Assert.IsTrue(options.Daily.Parameter.Count > 0);
+            Assert.IsTrue(options.Hourly.Parameter.Count > 0);
             
-            foreach(string s in DailyOptions.All)
+            foreach(string s in DailyOptions.All.Parameter)
             {
-                Assert.IsTrue(options.Daily.Contains(s));
+                Assert.IsTrue(options.Daily.Parameter.Contains(s));
             }
 
-            foreach (string s in HourlyOptions.All)
+            foreach (string s in HourlyOptions.All.Parameter)
             {
-                Assert.IsTrue(options.Hourly.Contains(s));
+                Assert.IsTrue(options.Hourly.Parameter.Contains(s));
             }
         }
     }
