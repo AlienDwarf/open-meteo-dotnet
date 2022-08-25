@@ -5,12 +5,34 @@ using System.Text.Json.Serialization;
 
 namespace OpenMeteo
 {
+    /// <summary>
+    /// Returned by Geocoding Api.
+    /// </summary>
     public class CityData
     {
+        /// <summary>
+        /// Unique identifier for this exact location
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// Location name. Localized following <see cref="GeocodingOptions.Language"/>
+        /// </summary>
         public string? Name { get; set; }
+
+        /// <summary>
+        /// Geographical WGS84 coordinates of this location
+        /// </summary>
         public float Latitude { get; set; }
+
+        /// <summary>
+        /// Geographical WGS84 coordinates of this location
+        /// </summary>
         public float Longitude { get; set; }
+
+        /// <summary>
+        /// Elevation above sea level in meters.
+        /// </summary>
         public float Elevation { get; set; }
         public string? Timezone { get; set; }
         [JsonPropertyName("feature_code")]
