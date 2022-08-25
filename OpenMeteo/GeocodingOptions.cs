@@ -11,11 +11,11 @@ namespace OpenMeteo
         public string Format { get; }
         public int Count { get; }
 
-        public GeocodingOptions(string city, string language, string format, int count)
+        public GeocodingOptions(string city, string language, int count)
         {
             Name = city;
             Language = language;
-            Format = format;
+            Format = "json";
             Count = count;
         }
 
