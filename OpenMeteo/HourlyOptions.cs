@@ -60,7 +60,7 @@ namespace OpenMeteo
             foreach (string s in parameter)
             {
                 if (!IsValidParameter(s.ToLower()))
-                    continue;
+                    throw new ArgumentException();
                 this.parameter.Add(s);
             }
         }
