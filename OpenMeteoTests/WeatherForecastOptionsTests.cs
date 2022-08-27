@@ -1,7 +1,5 @@
-using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMeteo;
-using System.Text.Json;
 
 namespace OpenMeteoTests
 {
@@ -11,7 +9,7 @@ namespace OpenMeteoTests
         [TestMethod]
         public void Empty_WeatherForecastOptions_Test()
         {
-            WeatherForecastOptions options = new WeatherForecastOptions();
+            WeatherForecastOptions options = new();
 
             Assert.IsNotNull(options);
             Assert.IsTrue(options.Current_Weather);
@@ -19,6 +17,8 @@ namespace OpenMeteoTests
             Assert.AreEqual(options.Longitude, 0f);
             Assert.IsNotNull(options.Daily);
             Assert.IsNotNull(options.Hourly);
+            Assert.AreEqual(0, options.Daily.Parameter.Count);
+            Assert.AreEqual(0, options.Hourly.Parameter.Count);
         }
 
         [TestMethod]
@@ -61,42 +61,19 @@ namespace OpenMeteoTests
                 10.5f, 20.5f, "kmh", "fahrenheit", "mm", "auto",
                 new HourlyOptions(), new DailyOptions(), false, "iso8601", 1);
 
-            Assert.IsTrue(options.Daily.Parameter.Count == 0);
-            Assert.IsTrue(options.Hourly.Parameter.Count == 0);
-
             options.Daily.Add(DailyOptionsType.sunset);
             options.Daily.Add(DailyOptionsType.sunrise);
 
-            Assert.IsTrue(options.Daily.Parameter.Count == 2);
-            Assert.IsTrue(options.Daily.Parameter.Contains("sunrise"));
-            Assert.IsTrue(options.Daily.Parameter.Contains("sunset"));
-
-            options.Hourly.Add(HourlyOptionsType.cloudcover_low);
-            options.Hourly.Add(HourlyOptionsType.cloudcover_high);
+            options.Hourly.Add(HourlyOptionsParameter.cloudcover_low);
+            options.Hourly.Add(HourlyOptionsParameter.cloudcover_high);
 
             Assert.IsTrue(options.Hourly.Parameter.Count == 2);
             Assert.IsTrue(options.Hourly.Parameter.Contains("cloudcover_low"));
             Assert.IsTrue(options.Hourly.Parameter.Contains("cloudcover_high"));
-        }
-        [TestMethod]
-        public void Daily_All_Hourly_All_Test()
-        {
-            var options = new WeatherForecastOptions(10.5f, 20f);
-            options.Daily = DailyOptions.All;
-            options.Hourly = HourlyOptions.All;
 
-            Assert.IsTrue(options.Daily.Parameter.Count > 0);
-            Assert.IsTrue(options.Hourly.Parameter.Count > 0);
-            
-            foreach(string s in DailyOptions.All.Parameter)
-            {
-                Assert.IsTrue(options.Daily.Parameter.Contains(s));
-            }
-
-            foreach (string s in HourlyOptions.All.Parameter)
-            {
-                Assert.IsTrue(options.Hourly.Parameter.Contains(s));
-            }
+            Assert.IsTrue(options.Daily.Parameter.Count == 2);
+            Assert.IsTrue(options.Daily.Parameter.Contains("sunrise"));
+            Assert.IsTrue(options.Daily.Parameter.Contains("sunset"));
         }
     }
 }

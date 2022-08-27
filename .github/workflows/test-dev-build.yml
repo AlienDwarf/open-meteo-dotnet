@@ -2,19 +2,21 @@ name: Test Development Build
 
 on:
   push:
-    branches: [ dev ]
+    branches-ignore:
+    - 'master'
     paths:
     - '**/*.cs'
     - '**/*.csproj'
   pull_request:
-    branches: [ dev ]
+    branches-ignore:
+      - 'master'
     paths:
     - '**/*.cs'
     - '**/*.csproj'
   
 
 env:
-  DOTNET_VERSION: '3.1.x' # The .NET SDK version to use
+  DOTNET_VERSION: '6.x.x' # The .NET SDK version to use
 
 jobs:
   test:

@@ -1,4 +1,4 @@
-name: Package and deploy new release
+name: Package, Deploy and create new release
 
 on:
   #pull_request:
