@@ -375,7 +375,7 @@ namespace OpenMeteo
             }
 
             // Finally add Hourly
-            if (options.Hourly.parameter.Count > 0)
+            if (options.Hourly.Count > 0)
             {
                 uri.Query += "&hourly=" + string.Join(",", options.Hourly);
             }
@@ -429,12 +429,12 @@ namespace OpenMeteo
             // Now we iterate through hourly and daily
 
             // Hourly
-            if (options.Hourly.parameter.Count > 0)
+            if (options.Hourly.Count > 0)
             {
                 bool firstHourlyElement = true;
                 uri.Query += "&hourly=";
 
-                foreach (string s in options.Hourly.parameter)
+                foreach (string s in options.Hourly)
                 {
                     if (firstHourlyElement)
                     {
