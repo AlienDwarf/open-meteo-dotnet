@@ -13,9 +13,9 @@ namespace OpenMeteo
         /// <summary>
         /// A copy of the current applied parameter. This is a COPY. Editing anything inside this copy won't be applied 
         /// </summary>
-        public List<string> Parameter { get { return new List<string>(parameter); } }
+        public List<string> Parameter { get { return new List<string>(_parameter); } }
 
-        public int Count => parameter.Count;
+        public int Count => _parameter.Count;
 
         public bool IsReadOnly => false;
 
@@ -59,14 +59,14 @@ namespace OpenMeteo
             "soil_moisture_27_81cm"
         };
 
-        private readonly List<string> parameter = new List<string>();
+        private readonly List<string> _parameter = new List<string>();
         public HourlyOptions(string[] parameter)
         {
             foreach (string s in parameter)
             {
                 if (!IsValidParameter(s.ToLower()))
                     throw new ArgumentException();
-                this.parameter.Add(s);
+                this._parameter.Add(s);
             }
         }
 
@@ -75,7 +75,7 @@ namespace OpenMeteo
             string s = parameter.ToLower();
             if (!IsValidParameter(s))
                 throw new ArgumentException();
-            this.parameter.Add(s);
+            this._parameter.Add(s);
         }
 
         public HourlyOptions(HourlyOptionsParameter parameter)
@@ -108,9 +108,9 @@ namespace OpenMeteo
             string paramToAdd = _allHourlyParams[(int)param];
 
             // Check that the parameter isn't already added
-            if (this.parameter.Contains(paramToAdd)) return false;
+            if (this._parameter.Contains(paramToAdd)) return false;
 
-            parameter.Add(paramToAdd);
+            _parameter.Add(paramToAdd);
             return true;
         }
 
@@ -138,37 +138,43 @@ namespace OpenMeteo
 
         public IEnumerator GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _parameter.GetEnumerator();
         }
 
         public void Add(string item)
         {
-            throw new NotImplementedException();
+            // Make sure that item is a valid parameter
+            if (!IsValidParameter(item)) return;
+
+            _parameter.Add(item);
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _parameter.Clear();
         }
 
         public bool Contains(string item)
         {
-            throw new NotImplementedException();
+            // Don't look through object is input is invaid
+            if (!IsValidParameter(item)) return false;
+            return _parameter.Contains(item);
         }
 
         public void CopyTo(string[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            _parameter.CopyTo(array, arrayIndex);
         }
 
         public bool Remove(string item)
         {
-            throw new NotImplementedException();
+            if (!IsValidParameter(item)) return false;
+            return _parameter.Remove(item);
         }
 
         IEnumerator<string> IEnumerable<string>.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _parameter.GetEnumerator();
         }
     }
 
