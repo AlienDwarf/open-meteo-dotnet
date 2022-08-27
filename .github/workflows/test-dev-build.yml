@@ -2,15 +2,14 @@ name: Test Development Build
 
 on:
   push:
-    branches:
-      - '**'
-      - '!master'
+    branches-ignore:
+    - 'master'
     paths:
     - '**/*.cs'
     - '**/*.csproj'
   pull_request:
-    branches:
-      - '!master'
+    branches-ignore:
+      - 'master'
     paths:
     - '**/*.cs'
     - '**/*.csproj'
