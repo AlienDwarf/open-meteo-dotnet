@@ -63,6 +63,11 @@ namespace OpenMeteo
             Add(parameter);
         }
 
+        /// <summary>
+        /// Index the collection
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns><see cref="string"/> DailyOptionsType as string representation at index</returns>
         public string this[int index]
         {
             get { return _parameter[index]; }
