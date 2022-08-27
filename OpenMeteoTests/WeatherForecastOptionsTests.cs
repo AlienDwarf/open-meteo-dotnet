@@ -1,7 +1,5 @@
-using Microsoft.VisualBasic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMeteo;
-using System.Text.Json;
 
 namespace OpenMeteoTests
 {
@@ -19,6 +17,8 @@ namespace OpenMeteoTests
             Assert.AreEqual(options.Longitude, 0f);
             Assert.IsNotNull(options.Daily);
             Assert.IsNotNull(options.Hourly);
+            Assert.AreEqual(0, options.Daily.Parameter.Count);
+            Assert.AreEqual(0, options.Hourly.Parameter.Count);
         }
 
         [TestMethod]
@@ -61,15 +61,8 @@ namespace OpenMeteoTests
                 10.5f, 20.5f, "kmh", "fahrenheit", "mm", "auto",
                 new HourlyOptions(), new DailyOptions(), false, "iso8601", 1);
 
-            Assert.IsTrue(options.Daily.Parameter.Count == 0);
-            Assert.IsTrue(options.Hourly.Parameter.Count == 0);
-
             options.Daily.Add(DailyOptionsType.sunset);
             options.Daily.Add(DailyOptionsType.sunrise);
-
-            Assert.IsTrue(options.Daily.Parameter.Count == 2);
-            Assert.IsTrue(options.Daily.Parameter.Contains("sunrise"));
-            Assert.IsTrue(options.Daily.Parameter.Contains("sunset"));
 
             options.Hourly.Add(HourlyOptionsParameter.cloudcover_low);
             options.Hourly.Add(HourlyOptionsParameter.cloudcover_high);
@@ -77,6 +70,10 @@ namespace OpenMeteoTests
             Assert.IsTrue(options.Hourly.Parameter.Count == 2);
             Assert.IsTrue(options.Hourly.Parameter.Contains("cloudcover_low"));
             Assert.IsTrue(options.Hourly.Parameter.Contains("cloudcover_high"));
+
+            Assert.IsTrue(options.Daily.Parameter.Count == 2);
+            Assert.IsTrue(options.Daily.Parameter.Contains("sunrise"));
+            Assert.IsTrue(options.Daily.Parameter.Contains("sunset"));
         }
     }
 }
