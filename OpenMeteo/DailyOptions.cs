@@ -23,7 +23,7 @@ namespace OpenMeteo
             "winddirection_10m_dominant",
             "shortwave_radiation_sum"
         };
-        public List<string> Parameter { get { return _parameter; } }
+        public List<string> Parameter { get { return new List<string>(_parameter); } }
 
         public int Count => _parameter.Count;
 
