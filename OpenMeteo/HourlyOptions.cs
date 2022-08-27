@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Text;
 
 namespace OpenMeteo
 {
-    public class HourlyOptions
+    public class HourlyOptions : IEnumerable, ICollection<string>
     {
         public static HourlyOptions All { get { return new HourlyOptions(_allHourlyParams); } }
 
@@ -13,6 +14,10 @@ namespace OpenMeteo
         /// A copy of the current applied parameter. This is a COPY. Editing anything inside this copy won't be applied 
         /// </summary>
         public List<string> Parameter { get { return new List<string>(parameter); } }
+
+        public int Count => parameter.Count;
+
+        public bool IsReadOnly => false;
 
         private static readonly string[] _allHourlyParams = new string[]
         {
@@ -54,7 +59,7 @@ namespace OpenMeteo
             "soil_moisture_27_81cm"
         };
 
-        internal readonly List<string> parameter = new List<string>();
+        private readonly List<string> parameter = new List<string>();
         public HourlyOptions(string[] parameter)
         {
             foreach (string s in parameter)
@@ -129,6 +134,41 @@ namespace OpenMeteo
                     found = true;
             }
             return found;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add(string item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(string item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(string[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(string item)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator<string> IEnumerable<string>.GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
     }
 
