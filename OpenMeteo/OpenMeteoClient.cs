@@ -434,16 +434,16 @@ namespace OpenMeteo
                 bool firstHourlyElement = true;
                 uri.Query += "&hourly=";
 
-                foreach (string s in options.Hourly)
+                foreach (var option in options.Hourly)
                 {
                     if (firstHourlyElement)
                     {
-                        uri.Query += s;
+                        uri.Query += option.ToString();
                         firstHourlyElement = false;
                     }
                     else
                     {
-                        uri.Query += "," + s;
+                        uri.Query += "," + option.ToString();
                     }
                 }
             }
