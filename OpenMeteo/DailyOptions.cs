@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace OpenMeteo
 {
-    public class DailyOptions : IEnumerable, ICollection<string>
+    public class DailyOptions : IEnumerable, ICollection<DailyOptionsType>
     {
-        public static DailyOptions All { get { return new DailyOptions(_allDailyParams); } }
+        public static DailyOptions All { get { return new DailyOptions((DailyOptionsType[])Enum.GetValues(typeof(DailyOptionsType))); } }
         private static readonly string[] _allDailyParams = new string[]
         {
             "temperature_2m_max",
@@ -23,14 +23,14 @@ namespace OpenMeteo
             "winddirection_10m_dominant",
             "shortwave_radiation_sum"
         };
-        public List<string> Parameter { get { return new List<string>(_parameter); } }
+        public List<DailyOptionsType> Parameter { get { return new List<DailyOptionsType>(_parameter); } }
 
         public int Count => _parameter.Count;
 
         public bool IsReadOnly => false;
 
-        private readonly List<string> _parameter = new List<string>();
-        public DailyOptions(string[] parameter)
+        private readonly List<DailyOptionsType> _parameter = new List<DailyOptionsType>();
+        /*public DailyOptions(string[] parameter)
         {
             foreach (string s in parameter)
             {
@@ -46,7 +46,7 @@ namespace OpenMeteo
             if (!IsValidParameter(s))
                 throw new ArgumentException(s + " is not a valid parameter");
             this._parameter.Add(s);
-        }
+        }*/
 
         public DailyOptions()
         {
@@ -68,7 +68,7 @@ namespace OpenMeteo
         /// </summary>
         /// <param name="index"></param>
         /// <returns><see cref="string"/> DailyOptionsType as string representation at index</returns>
-        public string this[int index]
+        public DailyOptionsType this[int index]
         {
             get { return _parameter[index]; }
             set
@@ -88,15 +88,14 @@ namespace OpenMeteo
             // So we can use our static string[] to get the string representation
             
             // Make sure we aren't our of array
-            if ((int)param < 0 || (int)param >= _allDailyParams.Length) return;
+            //if ((int)param < 0 || (int)param >= _allDailyParams.Length) return;
 
-            string paramToAdd = _allDailyParams[(int)param];
+            //string paramToAdd = _allDailyParams[(int)param];
 
             // Check that the parameter isn't already added
-            if (this._parameter.Contains(paramToAdd)) return;
+            if (this._parameter.Contains(param)) return;
 
-            _parameter.Add(paramToAdd);
-            return;
+            _parameter.Add(param);
         }
 
         public void Add(DailyOptionsType[] param)
@@ -146,78 +145,27 @@ namespace OpenMeteo
 
         public bool Contains(DailyOptionsType item)
         {
-            string paramStringRepresentation = _allDailyParams[(int)item];
-            bool found = false;
-
-            foreach (var parameter in _parameter)
-            {
-                if (parameter.Equals(paramStringRepresentation))
-                {
-                    found = true;
-                }
-            }
-            return found;
-        }
-
-        public void CopyTo(DailyOptionsType[] array, int arrayIndex)
-        {
-            // Error checking that all arguments are valid
-            if (array == null) 
-                throw new ArgumentNullException("array");
-            // If we arrayIndex is out of range
-            if (arrayIndex < 0 || arrayIndex >= _allDailyParams.Length) 
-                throw new ArgumentOutOfRangeException("arrayIndex out of Range");
-            // If we have less fields than needed
-            if (Count > array.Length - arrayIndex) 
-                throw new ArgumentException("The array has fewer elements than the collection");
-
-            // Iterate through list and add each entry, start at arrayIndex
-            for (int i = 0; i < _parameter.Count; i++)
-            {
-                DailyOptionsType? toAdd = DailyOptionsStringToEnum(_parameter[i]);
-                if (toAdd != null)
-                {
-                    array[i + arrayIndex] = (DailyOptionsType)toAdd;
-                }
-            }
+            return _parameter.Contains(item);
         }
 
         public bool Remove(DailyOptionsType item)
         {
-            return _parameter.Remove(_allDailyParams[(int)item]);
+            return _parameter.Remove(item);
         }
 
-        public void Add(string item)
-        {
-            if (!IsValidParameter(item)) return;
-
-            _parameter.Add(item);
-        }
-
-        public bool Contains(string item)
-        {
-            if (!IsValidParameter(item)) return false;
-            return _parameter.Contains(item);
-        }
-
-        public void CopyTo(string[] array, int arrayIndex)
+        public void CopyTo(DailyOptionsType[] array, int arrayIndex)
         {
             _parameter.CopyTo(array, arrayIndex);
         }
 
-        public bool Remove(string item)
-        {
-            return _parameter.Remove(item);
-        }
-
-        public IEnumerator<string> GetEnumerator()
+        public IEnumerator<DailyOptionsType> GetEnumerator()
         {
             return _parameter.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _parameter.GetEnumerator();
+            return this.GetEnumerator();
         }
     }
 
