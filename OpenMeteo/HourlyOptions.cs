@@ -1,18 +1,21 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Text;
 
 namespace OpenMeteo
 {
-    public class HourlyOptions
+    public class HourlyOptions : IEnumerable<HourlyOptionsParameter>, ICollection<HourlyOptionsParameter>
     {
-        public static HourlyOptions All { get { return new HourlyOptions(_allHourlyParams); } }
+        public static HourlyOptions All { get { return new HourlyOptions((HourlyOptionsParameter[])Enum.GetValues(typeof(HourlyOptionsParameter))); } }
 
         /// <summary>
         /// A copy of the current applied parameter. This is a COPY. Editing anything inside this copy won't be applied 
         /// </summary>
-        public List<string> Parameter { get { return new List<string>(parameter); } }
+        public List<HourlyOptionsParameter> Parameter { get { return new List<HourlyOptionsParameter>(_parameter); } }
+
+        public int Count => _parameter.Count;
+
+        public bool IsReadOnly => false;
 
         private static readonly string[] _allHourlyParams = new string[]
         {
@@ -54,14 +57,17 @@ namespace OpenMeteo
             "soil_moisture_27_81cm"
         };
 
-        internal readonly List<string> parameter = new List<string>();
-        public HourlyOptions(string[] parameter)
+        private readonly List<HourlyOptionsParameter> _parameter = new List<HourlyOptionsParameter>();
+        /*public HourlyOptions(string[] parameter)
         {
             foreach (string s in parameter)
             {
                 if (!IsValidParameter(s.ToLower()))
                     throw new ArgumentException();
-                this.parameter.Add(s);
+
+                var toAdd = HourlyOptionsStringToEnum(s);
+                if (toAdd != null)
+                    this._parameter.Add(toAdd);
             }
         }
 
@@ -70,21 +76,17 @@ namespace OpenMeteo
             string s = parameter.ToLower();
             if (!IsValidParameter(s))
                 throw new ArgumentException();
-            this.parameter.Add(s);
+            this._parameter.Add(s);
         }
-
+        */
         public HourlyOptions(HourlyOptionsParameter parameter)
         {
-            bool result = Add(parameter);
-            if (!result)
-                throw new ArgumentException();
+            Add(parameter);
         }
 
         public HourlyOptions(HourlyOptionsParameter[] parameter)
         {
-            bool result = Add(parameter);
-            if (!result)
-                throw new ArgumentException();
+            Add(parameter);
         }
 
         public HourlyOptions()
@@ -92,31 +94,37 @@ namespace OpenMeteo
 
         }
 
-        public bool Add(HourlyOptionsParameter param)
+        public HourlyOptionsParameter this[int index]
+        {
+            get { return _parameter[index]; }
+            set
+            {
+                _parameter[index] = value;
+            }
+        }
+
+        public void Add(HourlyOptionsParameter param)
         {
             // Each enum variable represents an integer starting with 0.
             // So we can use our static string[] to get the string representation
 
             // Make sure we aren't our of array
-            if ((int)param < 0 || (int)param >= _allHourlyParams.Length) return false;
+            //if ((int)param < 0 || (int)param >= _allHourlyParams.Length) return false;
 
-            string paramToAdd = _allHourlyParams[(int)param];
+            //string paramToAdd = _allHourlyParams[(int)param];
 
             // Check that the parameter isn't already added
-            if (this.parameter.Contains(paramToAdd)) return false;
+            if (this._parameter.Contains(param)) return;
 
-            parameter.Add(paramToAdd);
-            return true;
+            _parameter.Add(param);
         }
 
-        public bool Add(HourlyOptionsParameter[] param)
+        public void Add(HourlyOptionsParameter[] param)
         {
             foreach (HourlyOptionsParameter paramToAdd in param)
             {
-                if (!Add(paramToAdd))
-                    return false;
+                Add(paramToAdd);
             }
-            return true;
         }
 
         private bool IsValidParameter(string s)
@@ -130,8 +138,70 @@ namespace OpenMeteo
             }
             return found;
         }
+
+        public IEnumerator<HourlyOptionsParameter> GetEnumerator()
+        {
+            return _parameter.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        /*public void Add(string item)
+        {
+            // Make sure that item is a valid parameter
+            if (!IsValidParameter(item)) return;
+
+            _parameter.Add(item);
+        }*/
+
+        public void Clear()
+        {
+            _parameter.Clear();
+        }
+
+        public bool Contains(HourlyOptionsParameter item)
+        {
+            return _parameter.Contains(item);
+        }
+
+        public void CopyTo(HourlyOptionsParameter[] array, int arrayIndex)
+        {
+            _parameter.CopyTo(array, arrayIndex);
+        }
+
+        public bool Remove(HourlyOptionsParameter item)
+        {
+            return _parameter.Remove(item);
+        }
+
+        public HourlyOptionsParameter? HourlyOptionsStringToEnum(string option)
+        {
+            if (!IsValidParameter(option)) return null;
+
+            HourlyOptionsParameter toFind;
+
+            // Get array index of valid parameter == (int)enum
+            int index = Array.IndexOf(_allHourlyParams, option);
+
+            // Again check that we found an index
+            // (double check bc option we checked that option is a valid param already)
+            if (index == -1) return null;
+
+            // Check that index is defined in enum
+            if (!Enum.IsDefined(typeof(DailyOptionsType), index)) return null;
+            
+            toFind = (HourlyOptionsParameter)index;
+
+            // Return enum value
+            return toFind;
+        }
     }
 
+    // This is converted to string so it has to be the exact same name like in 
+    // https://open-meteo.com/en/docs #Hourly Parameter Definition
     public enum HourlyOptionsParameter
     {
         temperature_2m,

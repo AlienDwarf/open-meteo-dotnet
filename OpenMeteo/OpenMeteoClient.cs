@@ -366,7 +366,7 @@ namespace OpenMeteo
             // Now add the classes Daily & Hourly
 
             // Check that Daily is not empty
-            if (options.Daily.parameter.Count > 0)
+            if (options.Daily.Count > 0)
             {
                 // Add the parameters to query string.
                 // (This CAN'T be the first paramter because latitude and longitude are required and already added)
@@ -375,7 +375,7 @@ namespace OpenMeteo
             }
 
             // Finally add Hourly
-            if (options.Hourly.parameter.Count > 0)
+            if (options.Hourly.Count > 0)
             {
                 uri.Query += "&hourly=" + string.Join(",", options.Hourly);
             }
@@ -429,40 +429,40 @@ namespace OpenMeteo
             // Now we iterate through hourly and daily
 
             // Hourly
-            if (options.Hourly.parameter.Count > 0)
+            if (options.Hourly.Count > 0)
             {
                 bool firstHourlyElement = true;
                 uri.Query += "&hourly=";
 
-                foreach (string s in options.Hourly.parameter)
+                foreach (var option in options.Hourly)
                 {
                     if (firstHourlyElement)
                     {
-                        uri.Query += s;
+                        uri.Query += option.ToString();
                         firstHourlyElement = false;
                     }
                     else
                     {
-                        uri.Query += "," + s;
+                        uri.Query += "," + option.ToString();
                     }
                 }
             }
 
             // Daily
-            if (options.Daily.parameter.Count > 0)
+            if (options.Daily.Count > 0)
             {
                 bool firstDailyElement = true;
                 uri.Query += "&daily=";
-                foreach (string s in options.Daily.parameter)
+                foreach (var option in options.Daily)
                 {
                     if (firstDailyElement)
                     {
-                        uri.Query += s;
+                        uri.Query += option.ToString();
                         firstDailyElement = false;
                     }
                     else
                     {
-                        uri.Query += "," + s;
+                        uri.Query += "," + option.ToString();
                     }
                 }
             }
