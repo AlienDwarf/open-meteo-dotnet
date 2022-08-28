@@ -97,6 +97,15 @@ namespace OpenMeteo
 
         }
 
+        public string this[int index]
+        {
+            get { return _parameter[index]; }
+            set
+            {
+                _parameter[index] = value;
+            }
+        }
+
         public bool Add(HourlyOptionsParameter param)
         {
             // Each enum variable represents an integer starting with 0.
@@ -175,6 +184,28 @@ namespace OpenMeteo
         IEnumerator<string> IEnumerable<string>.GetEnumerator()
         {
             return _parameter.GetEnumerator();
+        }
+
+        public HourlyOptionsParameter? HourlyOptionsStringToEnum(string option)
+        {
+            if (!IsValidParameter(option)) return null;
+
+            HourlyOptionsParameter toFind;
+
+            // Get array index of valid parameter == (int)enum
+            int index = Array.IndexOf(_allHourlyParams, option);
+
+            // Again check that we found an index
+            // (double check bc option we checked that option is a valid param already)
+            if (index == -1) return null;
+
+            // Check that index is defined in enum
+            if (!Enum.IsDefined(typeof(DailyOptionsType), index)) return null;
+            
+            toFind = (HourlyOptionsParameter)index;
+
+            // Return enum value
+            return toFind;
         }
     }
 
