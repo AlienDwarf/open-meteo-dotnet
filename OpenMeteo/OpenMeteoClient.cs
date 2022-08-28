@@ -453,16 +453,16 @@ namespace OpenMeteo
             {
                 bool firstDailyElement = true;
                 uri.Query += "&daily=";
-                foreach (string s in options.Daily)
+                foreach (var option in options.Daily)
                 {
                     if (firstDailyElement)
                     {
-                        uri.Query += s;
+                        uri.Query += option.ToString();
                         firstDailyElement = false;
                     }
                     else
                     {
-                        uri.Query += "," + s;
+                        uri.Query += "," + option.ToString();
                     }
                 }
             }
