@@ -40,9 +40,9 @@ namespace OpenMeteoTests
             Assert.IsTrue(options.Daily.Parameter.Count > 0);
             Assert.IsTrue(options.Hourly.Parameter.Count > 0);
 
-            foreach (string s in DailyOptions.All)
+            foreach (var dailyOption in DailyOptions.All)
             {
-                Assert.IsTrue(options.Daily.Parameter.Contains(s));
+                Assert.IsTrue(options.Daily.Parameter.Contains(dailyOption));
             }
 
             foreach (HourlyOptionsParameter option in HourlyOptions.All)

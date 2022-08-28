@@ -72,8 +72,8 @@ namespace OpenMeteoTests
             Assert.IsTrue(options.Hourly.Parameter.Contains(HourlyOptionsParameter.cloudcover_high));
 
             Assert.IsTrue(options.Daily.Parameter.Count == 2);
-            Assert.IsTrue(options.Daily.Parameter.Contains("sunrise"));
-            Assert.IsTrue(options.Daily.Parameter.Contains("sunset"));
+            Assert.IsTrue(options.Daily.Parameter.Contains(DailyOptionsType.sunrise));
+            Assert.IsTrue(options.Daily.Parameter.Contains(DailyOptionsType.sunset));
         }
     }
 }
