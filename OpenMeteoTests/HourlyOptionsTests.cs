@@ -72,5 +72,16 @@ namespace OpenMeteoTests
             });
             Assert.ThrowsException<ArgumentException>(action_array);
         }
+
+        [TestMethod]
+        public void HourlyOptionsParameter_String_To_Enum_Test()
+        {
+            string hourlyOptionsParameterString = HourlyOptions.All[0];
+            HourlyOptions options = new HourlyOptions(hourlyOptionsParameterString);
+
+            var toTest = options.HourlyOptionsStringToEnum(options[0]);
+
+            Assert.AreEqual(hourlyOptionsParameterString, toTest?.ToString());
+        }
     }
 }
