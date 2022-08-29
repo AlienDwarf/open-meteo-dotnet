@@ -10,9 +10,7 @@ A .Net Standard library for the [Open-Meteo](https://open-meteo.com) API.
 This project is still in development. There will be major changes in the codebase.
 
 ## 🎯 Roadmap
-- Enums for HourlyOptions & DailyOptions
 - Documentation
-- Unit tests
 
 
 ## 🔨 Installation/Build
