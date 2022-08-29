@@ -19,17 +19,17 @@ namespace OpenMeteo
         /// <summary>
         /// Default is "celsius". Use "fahrenheit" to convert temperature to fahrenheit
         /// </summary>
-        public string Temperature_Unit { get; set; }
+        public TemperatureUnitType Temperature_Unit { get; set; }
 
         /// <summary>
         /// Default is "kmh". Other options: "ms", "mph", "kn"
         /// </summary>
-        public string Windspeed_Unit { get; set; }
+        public WindspeedUnitType Windspeed_Unit { get; set; }
 
         /// <summary>
         /// Default is "mm". Other options: "inch"
         /// </summary>
-        public string Precipitation_Unit { get; set; }
+        public PrecipitationUnitType Precipitation_Unit { get; set; }
 
         /// <summary>
         /// Default is "GMT". Any time zone name from the time zone database is supported.
@@ -50,7 +50,7 @@ namespace OpenMeteo
         /// Please note that all timestamp are in GMT+0!
         /// See https://open-meteo.com/en/docs for more info
         /// </summary>
-        public string Timeformat { get; set; }
+        public TimeformatType Timeformat { get; set; }
 
         /// <summary>
         /// Default is "0". Other options: "1", "2"
@@ -61,7 +61,7 @@ namespace OpenMeteo
         private HourlyOptions _hourly = new HourlyOptions();
         private DailyOptions _daily = new DailyOptions();
 
-        public WeatherForecastOptions(float latitude, float longitude, string temperature_Unit, string windspeed_Unit, string precipitation_Unit, string timezone, HourlyOptions hourly, DailyOptions daily, bool current_Weather, string timeformat, int past_Days)
+        public WeatherForecastOptions(float latitude, float longitude, TemperatureUnitType temperature_Unit, WindspeedUnitType windspeed_Unit, PrecipitationUnitType precipitation_Unit, string timezone, HourlyOptions hourly, DailyOptions daily, bool current_Weather, TimeformatType timeformat, int past_Days)
         {
             Latitude = latitude;
             Longitude = longitude;
@@ -79,10 +79,10 @@ namespace OpenMeteo
         {
             Latitude = latitude;
             Longitude = longitude;
-            Temperature_Unit = "celsius";
-            Windspeed_Unit = "kmh";
-            Precipitation_Unit = "mm";
-            Timeformat = "iso8601";
+            Temperature_Unit = TemperatureUnitType.celsius;
+            Windspeed_Unit = WindspeedUnitType.kmh;
+            Precipitation_Unit = PrecipitationUnitType.mm;
+            Timeformat = TimeformatType.iso8601;
             Timezone = "GMT";
             Current_Weather = true;
         }
@@ -90,12 +90,38 @@ namespace OpenMeteo
         {
             Latitude = 0f;
             Longitude = 0f;
-            Temperature_Unit = "celsius";
-            Windspeed_Unit = "kmh";
-            Precipitation_Unit = "mm";
-            Timeformat = "iso8601";
+            Temperature_Unit = TemperatureUnitType.celsius;
+            Windspeed_Unit = WindspeedUnitType.kmh;
+            Precipitation_Unit = PrecipitationUnitType.mm;
+            Timeformat = TimeformatType.iso8601;
             Timezone = "GMT";
             Current_Weather = true;
         }
+    }
+
+    public enum TemperatureUnitType
+    {
+        celsius,
+        fahrenheit
+    }
+
+    public enum WindspeedUnitType
+    {
+        kmh,
+        ms,
+        mph,
+        kn
+    }
+
+    public enum PrecipitationUnitType
+    {
+        mm,
+        inch
+    }
+
+    public enum TimeformatType
+    {
+        iso8601,
+        unixtime
     }
 }
