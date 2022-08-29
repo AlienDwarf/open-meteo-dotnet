@@ -41,8 +41,8 @@ git clone https://github.com/AlienDwarf/open-meteo-dotnet
 
 ## 💻 Usage
 
-### Zero config example:
-```c#
+### Minimal:
+```cs
 using OpenMeteo;
 
 static void Main()
@@ -52,76 +52,21 @@ static void Main()
 
 static async Task RunAsync()
 {
-    // Create a new client object to perform api calls.
-    OpenMeteoClient client = new OpenMeteoClient();
+    // Before using the library you have to create a new client. 
+    // Once created you can reuse it for every other api call you are going to make. 
+    // There is no need to create multiple clients.
+    OpenMeteo.OpenMeteoClient client = new OpenMeteo.OpenMeteoClient();
 
-    // Make an api call to receive data about Tokyo, Japan
-    var weatherData = await client.QueryAsync("Tokyo");
+    // Make a new api call to get the current weather in tokyo
+    WeatherForecast weatherData = await client.QueryAsync("Tokyo");
 
-    // Output the current temperature
-    Console.WriteLine("Weather in Tokyo: " + weatherData.Current_Weather.Temperature + "°C");
-    
-    // Output: "Weather in Tokyo: 28.1°C
-}
-```
-
-### Make an api call with individual options:
-```c#
-using OpenMeteo;
-
-static void Main()
-{
-    RunAsync().GetAwaiter().GetResult();
-}
-
-static async Task RunAsync()
-{
-    // Create a new open-meteo client
-    OpenMeteoClient client = new OpenMeteoClient();
-
-    // Create a new options object
-    WeatherForecastOptions options = new WeatherForecastOptions();
-
-    // Set some options
-    options.Current_Weather = true;
-    options.Latitude = 35.6895f; 
-    options.Longitude = 139.69171f; // For Tokyo
-
-    // Make the api call to receive weather data
-    WeatherForecast weatherData = await client.QueryAsync(options);
-
+    // Output the current weather to console
     Console.WriteLine("Weather in Tokyo: " + weatherData.CurrentWeather.Temperature + "°C");
-
+    
     // Output: "Weather in Tokyo: 28.1°C
 }
 ```
-### Getting Geocoding API data and reuse it for weather forecast:
-```c#
-using OpenMeteo;
-
-static void Main()
-{
-    RunAsync.GetAwaiter().GetResult();
-}
-
-static async Task RunAsync()
-{
-    OpenMeteoClient client = new OpenMeteoClient();
-    GeocodingOptions geocodingOptions = new OpenMeteo.GeocodingOptions("Tokyo");
-    var cityDataResults = await client.GetCityGeocodingDataAsync(geocodingOptions);
-    var cityData = cityDataResults.Cities[0];
-
-    Console.WriteLine(cityData.Name + " is a city in " + cityData.Country + " with a population of " + cityData.Population + " people.");
-    // or Console.WriteLine(cityDataResults.Cities[0].Name + " is a city in " + cityData.Cities[0].Country + " with a population of " + cityData.Cities[0].Population + " people.");
-    // Output: "Tokyo is a city in Japan with a population of 8336599 people."
-
-    var weatherData = await client.QueryAsync(geocodingOptions);
-    Console.WriteLine("Weather in " + cityData.Name + " is " + weatherData.CurrentWeather.Temperature + "°C");
-    
-    // Output: Weather in Tokyo is 25°C.
-}
-```
-
+*For more examples visit the [Wiki](https://github.com/AlienDwarf/open-meteo-dotnet/wiki/Usage#examples) example page.*
 
 ## License
 
