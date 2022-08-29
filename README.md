@@ -7,10 +7,11 @@
 A .Net Standard library for the [Open-Meteo](https://open-meteo.com) API.
 ## ❕ Information
 
-This project is still in development. There will be major changes in the codebase.
+This project is still in development. There *will* be major changes in the codebase.
 
 ## 🎯 Roadmap
-- Documentation
+- Documentation and wiki
+- Air Quality API support
 
 
 ## 🔨 Installation/Build
@@ -51,15 +52,20 @@ static void Main()
 
 static async Task RunAsync()
 {
+    // Create a new client object to perform api calls.
     OpenMeteoClient client = new OpenMeteoClient();
+
+    // Make an api call to receive data about Tokyo, Japan
     var weatherData = await client.QueryAsync("Tokyo");
+
+    // Output the current temperature
     Console.WriteLine("Weather in Tokyo: " + weatherData.Current_Weather.Temperature + "°C");
     
     // Output: "Weather in Tokyo: 28.1°C
 }
 ```
 
-### Adding options:
+### Make an api call with individual options:
 ```c#
 using OpenMeteo;
 
@@ -70,13 +76,20 @@ static void Main()
 
 static async Task RunAsync()
 {
+    // Create a new open-meteo client
     OpenMeteoClient client = new OpenMeteoClient();
+
+    // Create a new options object
     WeatherForecastOptions options = new WeatherForecastOptions();
+
+    // Set some options
     options.Current_Weather = true;
     options.Latitude = 35.6895f; 
     options.Longitude = 139.69171f; // For Tokyo
 
+    // Make the api call to receive weather data
     WeatherForecast weatherData = await client.QueryAsync(options);
+
     Console.WriteLine("Weather in Tokyo: " + weatherData.CurrentWeather.Temperature + "°C");
 
     // Output: "Weather in Tokyo: 28.1°C
