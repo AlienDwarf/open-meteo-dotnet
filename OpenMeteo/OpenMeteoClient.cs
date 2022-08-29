@@ -410,19 +410,15 @@ namespace OpenMeteo
 
             uri.Query += "&longitude=" + options.Longitude;
 
-            if (options.Temperature_Unit != string.Empty)
-                uri.Query += "&temperature_unit=" + options.Temperature_Unit;
-            if (options.Windspeed_Unit != string.Empty)
-                uri.Query += "&windspeed_unit=" + options.Windspeed_Unit;
-            if (options.Precipitation_Unit != string.Empty)
-                uri.Query += "&precipitation_unit=" + options.Precipitation_Unit;
+            uri.Query += "&temperature_unit=" + options.Temperature_Unit.ToString();
+            uri.Query += "&windspeed_unit=" + options.Windspeed_Unit.ToString();
+            uri.Query += "&precipitation_unit=" + options.Precipitation_Unit.ToString();
             if (options.Timezone != string.Empty)
                 uri.Query += "&timezone=" + options.Timezone;
 
             uri.Query += "&current_weather=" + options.Current_Weather;
 
-            if (options.Timeformat != string.Empty)
-                uri.Query += "&timeformat=" + options.Timeformat;
+            uri.Query += "&timeformat=" + options.Timeformat.ToString();
 
             uri.Query += "&past_days=" + options.Past_Days;
 
