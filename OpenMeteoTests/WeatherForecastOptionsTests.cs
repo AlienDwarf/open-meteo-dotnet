@@ -61,8 +61,8 @@ namespace OpenMeteoTests
                 10.5f, 20.5f, "kmh", "fahrenheit", "mm", "auto",
                 new HourlyOptions(), new DailyOptions(), false, "iso8601", 1);
 
-            options.Daily.Add(DailyOptionsType.sunset);
-            options.Daily.Add(DailyOptionsType.sunrise);
+            options.Daily.Add(DailyOptionsParameter.sunset);
+            options.Daily.Add(DailyOptionsParameter.sunrise);
 
             options.Hourly.Add(HourlyOptionsParameter.cloudcover_low);
             options.Hourly.Add(HourlyOptionsParameter.cloudcover_high);
@@ -72,8 +72,8 @@ namespace OpenMeteoTests
             Assert.IsTrue(options.Hourly.Parameter.Contains(HourlyOptionsParameter.cloudcover_high));
 
             Assert.IsTrue(options.Daily.Parameter.Count == 2);
-            Assert.IsTrue(options.Daily.Parameter.Contains(DailyOptionsType.sunrise));
-            Assert.IsTrue(options.Daily.Parameter.Contains(DailyOptionsType.sunset));
+            Assert.IsTrue(options.Daily.Parameter.Contains(DailyOptionsParameter.sunrise));
+            Assert.IsTrue(options.Daily.Parameter.Contains(DailyOptionsParameter.sunset));
         }
     }
 }

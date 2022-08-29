@@ -191,7 +191,7 @@ namespace OpenMeteo
             if (index == -1) return null;
 
             // Check that index is defined in enum
-            if (!Enum.IsDefined(typeof(DailyOptionsType), index)) return null;
+            if (!Enum.IsDefined(typeof(DailyOptionsParameter), index)) return null;
             
             toFind = (HourlyOptionsParameter)index;
 

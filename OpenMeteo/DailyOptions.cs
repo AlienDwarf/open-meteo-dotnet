@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace OpenMeteo
 {
-    public class DailyOptions : IEnumerable, ICollection<DailyOptionsType>
+    public class DailyOptions : IEnumerable, ICollection<DailyOptionsParameter>
     {
-        public static DailyOptions All { get { return new DailyOptions((DailyOptionsType[])Enum.GetValues(typeof(DailyOptionsType))); } }
+        public static DailyOptions All { get { return new DailyOptions((DailyOptionsParameter[])Enum.GetValues(typeof(DailyOptionsParameter))); } }
         private static readonly string[] _allDailyParams = new string[]
         {
             "temperature_2m_max",
@@ -23,13 +23,13 @@ namespace OpenMeteo
             "winddirection_10m_dominant",
             "shortwave_radiation_sum"
         };
-        public List<DailyOptionsType> Parameter { get { return new List<DailyOptionsType>(_parameter); } }
+        public List<DailyOptionsParameter> Parameter { get { return new List<DailyOptionsParameter>(_parameter); } }
 
         public int Count => _parameter.Count;
 
         public bool IsReadOnly => false;
 
-        private readonly List<DailyOptionsType> _parameter = new List<DailyOptionsType>();
+        private readonly List<DailyOptionsParameter> _parameter = new List<DailyOptionsParameter>();
         /*public DailyOptions(string[] parameter)
         {
             foreach (string s in parameter)
@@ -53,12 +53,12 @@ namespace OpenMeteo
             
         }
 
-        public DailyOptions(DailyOptionsType parameter)
+        public DailyOptions(DailyOptionsParameter parameter)
         {
             Add(parameter);
         }
 
-        public DailyOptions(DailyOptionsType[] parameter)
+        public DailyOptions(DailyOptionsParameter[] parameter)
         {
             Add(parameter);
         }
@@ -68,7 +68,7 @@ namespace OpenMeteo
         /// </summary>
         /// <param name="index"></param>
         /// <returns><see cref="string"/> DailyOptionsType as string representation at index</returns>
-        public DailyOptionsType this[int index]
+        public DailyOptionsParameter this[int index]
         {
             get { return _parameter[index]; }
             set
@@ -82,7 +82,7 @@ namespace OpenMeteo
         /// </summary>
         /// <param name="param"></param>
         /// <returns>True if successfully added else false</returns>
-        public void Add(DailyOptionsType param)
+        public void Add(DailyOptionsParameter param)
         {
             // Each enum variable represents an integer starting with 0.
             // So we can use our static string[] to get the string representation
@@ -98,9 +98,9 @@ namespace OpenMeteo
             _parameter.Add(param);
         }
 
-        public void Add(DailyOptionsType[] param)
+        public void Add(DailyOptionsParameter[] param)
         {
-            foreach (DailyOptionsType paramToAdd in param)
+            foreach (DailyOptionsParameter paramToAdd in param)
             {
                 Add(paramToAdd);
             }
@@ -118,11 +118,11 @@ namespace OpenMeteo
             return found;
         }
 
-        private DailyOptionsType? DailyOptionsStringToEnum(string option)
+        private DailyOptionsParameter? DailyOptionsStringToEnum(string option)
         {
             if (!IsValidParameter(option)) return null;
 
-            DailyOptionsType? toFind = null;
+            DailyOptionsParameter? toFind = null;
 
             // Get array index of valid parameter == (int)enum
             int index = Array.IndexOf(_allDailyParams, option);
@@ -132,7 +132,7 @@ namespace OpenMeteo
             if (index == -1) return null;
 
             // Check that index is defined in enum
-            if (!Enum.IsDefined(typeof(DailyOptionsType), index)) return null;
+            if (!Enum.IsDefined(typeof(DailyOptionsParameter), index)) return null;
             
             // Return enum to 
             return toFind;
@@ -143,22 +143,22 @@ namespace OpenMeteo
             _parameter.Clear();
         }
 
-        public bool Contains(DailyOptionsType item)
+        public bool Contains(DailyOptionsParameter item)
         {
             return _parameter.Contains(item);
         }
 
-        public bool Remove(DailyOptionsType item)
+        public bool Remove(DailyOptionsParameter item)
         {
             return _parameter.Remove(item);
         }
 
-        public void CopyTo(DailyOptionsType[] array, int arrayIndex)
+        public void CopyTo(DailyOptionsParameter[] array, int arrayIndex)
         {
             _parameter.CopyTo(array, arrayIndex);
         }
 
-        public IEnumerator<DailyOptionsType> GetEnumerator()
+        public IEnumerator<DailyOptionsParameter> GetEnumerator()
         {
             return _parameter.GetEnumerator();
         }
@@ -169,7 +169,7 @@ namespace OpenMeteo
         }
     }
 
-    public enum DailyOptionsType
+    public enum DailyOptionsParameter
     {
         temperature_2m_max,
         temperature_2m_min,
