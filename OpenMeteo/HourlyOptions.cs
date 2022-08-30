@@ -17,6 +17,7 @@ namespace OpenMeteo
 
         public bool IsReadOnly => false;
 
+        [Obsolete]
         private static readonly string[] _allHourlyParams = new string[]
         {
             "temperature_2m",
@@ -127,6 +128,7 @@ namespace OpenMeteo
             }
         }
 
+        [Obsolete]
         private bool IsValidParameter(string s)
         {
             bool found = false;
@@ -177,6 +179,7 @@ namespace OpenMeteo
             return _parameter.Remove(item);
         }
 
+        [Obsolete]
         public HourlyOptionsParameter? HourlyOptionsStringToEnum(string option)
         {
             if (!IsValidParameter(option)) return null;
