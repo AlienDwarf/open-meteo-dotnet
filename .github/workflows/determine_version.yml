@@ -21,7 +21,7 @@ env:
 
 jobs:
   determine:
-    if: github.event.pull_request.merged == true # Only create a new tag when a PR is merged
+    #if: github.event.pull_request.merged == true # Only create a new tag when a PR is merged
     runs-on: ubuntu-latest
 
     steps:
