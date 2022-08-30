@@ -4,7 +4,7 @@ on:
       - "*"
 
 env:
-  Git_Branch: master
+  GIT_BRANCH: 'master'
 
 jobs:
   determine:
