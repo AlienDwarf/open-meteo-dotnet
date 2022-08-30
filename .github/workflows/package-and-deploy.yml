@@ -1,13 +1,12 @@
 name: Package, Deploy and create new release
 
 on:
-  #pull_request:
-  #  branches: [ master ]
-  #  types:
-  #  - closed
   push:
-    tags:
-      - "v*.*.*"
+    branches: [ master ]
+    paths:
+      - '**/*.cs'
+      - '**/*.csproj'
+
 
 jobs:
   build:
