@@ -41,21 +41,21 @@ namespace OpenMeteo
         /// <summary>
         /// Performs two GET-Requests (first geocoding api for latitude,longitude, then weather forecast)
         /// </summary>
-        /// <param name="city">Name of city</param>
+        /// <param name="location">Name of city</param>
         /// <returns>If successful returns an awaitable Task containing WeatherForecast or NULL if request failed</returns>
-        public async Task<WeatherForecast?> QueryAsync(string city)
+        public async Task<WeatherForecast?> QueryAsync(string location)
         {
-            GeocodingOptions geocodingOptions = new GeocodingOptions(city);
+            GeocodingOptions geocodingOptions = new GeocodingOptions(location);
 
-            // Get City Information
+            // Get location Information
             GeocodingApiResponse? response = await GetGeocodingDataAsync(geocodingOptions);
-            if (response == null || response.Cities == null)
+            if (response == null || response.Locations == null)
                 return null;
 
             WeatherForecastOptions options = new WeatherForecastOptions
             {
-                Latitude = response.Cities[0].Latitude,
-                Longitude = response.Cities[0].Longitude,
+                Latitude = response.Locations[0].Latitude,
+                Longitude = response.Locations[0].Longitude,
                 Current_Weather = true
             };
 
@@ -70,14 +70,14 @@ namespace OpenMeteo
         public async Task<WeatherForecast?> QueryAsync(GeocodingOptions options)
         {
             // Get City Information
-            GeocodingApiResponse? response = await GetCityGeocodingDataAsync(options);
-            if (response == null || response.Cities == null)
+            GeocodingApiResponse? response = await GetLocationDataAsync(options);
+            if (response == null || response?.Locations == null)
                 return null;
 
             WeatherForecastOptions weatherForecastOptions = new WeatherForecastOptions
             {
-                Latitude = response.Cities[0].Latitude,
-                Longitude = response.Cities[0].Longitude,
+                Latitude = response.Locations[0].Latitude,
+                Longitude = response.Locations[0].Longitude,
                 Current_Weather = true
             };
 
@@ -119,18 +119,36 @@ namespace OpenMeteo
         }
 
         /// <summary>
-        /// Performs one GET-Request to Open-Meteo Geocoding API 
+        /// Gets Weather Forecast for a given location with individual options
         /// </summary>
-        /// <param name="city">Name of city</param>
-        /// <returns></returns>
-        public async Task<GeocodingApiResponse?> GetCityGeocodingDataAsync(string city)
+        /// <param name="location"></param>
+        /// <param name="options"></param>
+        /// <returns><see cref="WeatherForecast"/> for the FIRST found result for <paramref name="location"/></returns>
+        public async Task<WeatherForecast?> QueryAsync(string location, WeatherForecastOptions options)
         {
-            GeocodingOptions geocodingOptions = new GeocodingOptions(city);
+            GeocodingApiResponse? geocodingApiResponse = await GetLocationDataAsync(location);
+            if (geocodingApiResponse == null || geocodingApiResponse?.Locations == null)
+                return null;
+            
+            options.Longitude = geocodingApiResponse.Locations[0].Longitude;
+            options.Latitude = geocodingApiResponse.Locations[0].Latitude;
 
-            return await GetCityGeocodingDataAsync(geocodingOptions);
+            return await GetWeatherForecastAsync(options);
         }
 
-        public async Task<GeocodingApiResponse?> GetCityGeocodingDataAsync(GeocodingOptions options)
+        /// <summary>
+        /// Performs one GET-Request to Open-Meteo Geocoding API 
+        /// </summary>
+        /// <param name="location">Name of a location or city</param>
+        /// <returns></returns>
+        public async Task<GeocodingApiResponse?> GetLocationDataAsync(string location)
+        {
+            GeocodingOptions geocodingOptions = new GeocodingOptions(location);
+
+            return await GetLocationDataAsync(geocodingOptions);
+        }
+
+        public async Task<GeocodingApiResponse?> GetLocationDataAsync(GeocodingOptions options)
         {
             return await GetGeocodingDataAsync(options);
         }
@@ -138,14 +156,14 @@ namespace OpenMeteo
         /// <summary>
         /// Performs one GET-Request to get a (float, float) tuple
         /// </summary>
-        /// <param name="city">Name of city</param>
-        /// <returns>(latitude, longitude) tuple</returns>
-        public async Task<(float latitude, float longitude)?> GetCityLatitudeLongitudeAsync(string city)
+        /// <param name="location">Name of a city or location</param>
+        /// <returns>(latitude, longitude) tuple of first found location or null if no location was found</returns>
+        public async Task<(float latitude, float longitude)?> GetLocationLatitudeLongitudeAsync(string location)
         {
-            GeocodingApiResponse? response = await GetCityGeocodingDataAsync(city);
-            if (response == null || response?.Cities == null)
+            GeocodingApiResponse? response = await GetLocationDataAsync(location);
+            if (response == null || response?.Locations == null)
                 return null;
-            return (response.Cities[0].Latitude, response.Cities[0].Longitude);
+            return (response.Locations[0].Latitude, response.Locations[0].Longitude);
         }
 
         /// <summary>
