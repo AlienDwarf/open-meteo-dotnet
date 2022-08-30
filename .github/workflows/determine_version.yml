@@ -1,13 +1,27 @@
 on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    types:
+      - closed
+    paths:
+      - '**/*.cs'
+      - '**/*.csproj'
   push:
-    tags:
-      - "*"
+    branches:
+      - main
+      - develop
+    paths:
+      - '**/*.cs'
+      - '**/*.csproj'
 
 env:
   GIT_BRANCH: 'master'
 
 jobs:
   determine:
+    if: github.event.pull_request.merged == true # Only create a new tag when a PR is merged
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +34,6 @@ jobs:
       uses: actions/checkout@v3
       with:
           fetch-depth: 0
-          ref: master
 
     - name: Determine Version
       id: gitversion
