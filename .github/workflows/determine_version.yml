@@ -1,7 +1,7 @@
 on:
   pull_request:
     branches:
-      - main
+      - master
       - develop
     types:
       - closed
@@ -10,7 +10,7 @@ on:
       - '**/*.csproj'
   push:
     branches:
-      - main
+      - master
       - develop
     paths:
       - '**/*.cs'
