@@ -40,16 +40,15 @@ namespace OpenMeteoTests
             Assert.IsTrue(options.Daily.Parameter.Count > 0);
             Assert.IsTrue(options.Hourly.Parameter.Count > 0);
 
-            foreach (var dailyOption in DailyOptions.All)
+            foreach(var dailyOption in (DailyOptionsParameter[])Enum.GetValues(typeof(DailyOptionsParameter)))
             {
-                Assert.IsTrue(options.Daily.Parameter.Contains(dailyOption));
+                Assert.IsTrue(options.Daily.Contains(dailyOption));
             }
 
-            foreach (HourlyOptionsParameter option in HourlyOptions.All)
+            foreach(var hourlyOption in (HourlyOptionsParameter[])Enum.GetValues(typeof(HourlyOptionsParameter)))
             {
-                Assert.IsTrue(options.Hourly.Parameter.Contains(option));
-                
-            }   
+                Assert.IsTrue(options.Hourly.Contains(hourlyOption));
+            }
         }
 
         [TestMethod]
