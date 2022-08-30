@@ -8,7 +8,7 @@ namespace OpenMeteo
     public class GeocodingApiResponse
     {
         [JsonPropertyName("results")]
-        public LocationData[]? Cities { get; set; }
+        public LocationData[]? Locations { get; set; }
         public float Generationtime_ms { get; set; }
 
     }
