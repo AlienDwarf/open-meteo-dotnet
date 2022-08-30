@@ -47,15 +47,39 @@ namespace OpenMeteoTests
         }
 
         [TestMethod]
-        public async Task Only_Location_Name_test()
+        public async Task WeatherForecast_With_WeatherForecastOptions_Test()
         {
-            OpenMeteoClient client = new OpenMeteoClient();
-            string location = "Tokyo";
-            WeatherForecast weatherData = await client.QueryAsync(location);
+            OpenMeteoClient client = new();
+            WeatherForecastOptions weatherForecast = new();
 
-            Assert.IsNotNull(weatherData);
-            Assert.IsNotNull(weatherData.Longitude);
-            Assert.IsNotNull(weatherData.Latitude);
+            var res = await client.QueryAsync(weatherForecast);
+
+            Assert.IsNotNull(res);
+            Assert.AreEqual(0f, res.Latitude);
+            Assert.AreEqual(0f, res.Longitude);
+        }
+
+        [TestMethod]
+        public async Task WeatherForecast_With_String_And_Options_Test()
+        {
+            OpenMeteoClient client = new();
+            var options = new WeatherForecastOptions(
+                0, 
+                0, 
+                TemperatureUnitType.celsius, 
+                WindspeedUnitType.kmh, 
+                PrecipitationUnitType.mm, 
+                "GMT", 
+                null, 
+                null, 
+                true, 
+                TimeformatType.iso8601, 
+                0
+                );
+
+            var res = await client.QueryAsync("Tokyo", options);
+
+            Assert.IsNotNull(res);
         }
     }
 }
