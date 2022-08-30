@@ -402,7 +402,7 @@ namespace OpenMeteo
             return uri.ToString().ToLower();
         }
 
-        internal string MergeUrlWithOptions(string url, WeatherForecastOptions? options)
+        private string MergeUrlWithOptions(string url, WeatherForecastOptions? options)
         {
             if (options == null) return url;
 
@@ -487,7 +487,7 @@ namespace OpenMeteo
         /// Combines a given url with an options object to create a url for GET requests
         /// </summary>
         /// <returns>url+queryString</returns>
-        internal string MergeUrlWithOptions(string url, GeocodingOptions options)
+        private string MergeUrlWithOptions(string url, GeocodingOptions options)
         {
             if (options == null) return url;
 
