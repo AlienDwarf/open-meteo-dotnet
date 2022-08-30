@@ -3,6 +3,9 @@ on:
     tags:
       - "*"
 
+env:
+  Git_Branch: master
+
 jobs:
   determine:
     runs-on: ubuntu-latest
