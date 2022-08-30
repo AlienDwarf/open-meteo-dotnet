@@ -74,7 +74,9 @@ namespace OpenMeteoTests
                 null, 
                 true, 
                 TimeformatType.iso8601, 
-                0
+                0,
+                "2022-08-30",
+                "2022-08-31"
                 );
 
             var res = await client.QueryAsync("Tokyo", options);
