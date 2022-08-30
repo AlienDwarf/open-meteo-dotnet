@@ -58,10 +58,24 @@ namespace OpenMeteo
         /// <value></value>
         public int Past_Days { get; set; }
 
+        /// <summary>
+        /// The time interval to get weather data. A day must be specified as an ISO8601 date (e.g. 2022-06-30).
+        /// (yyyy-mm-dd)
+        /// https://open-meteo.com/en/docs
+        /// </summary>
+        public string Start_date { get; set; }
+
+        /// <summary>
+        /// The time interval to get weather data. A day must be specified as an ISO8601 date (e.g. 2022-06-30).
+        /// (yyyy-mm-dd)
+        /// https://open-meteo.com/en/docs
+        /// </summary>
+        public string End_date { get; set; }
+
         private HourlyOptions _hourly = new HourlyOptions();
         private DailyOptions _daily = new DailyOptions();
 
-        public WeatherForecastOptions(float latitude, float longitude, TemperatureUnitType temperature_Unit, WindspeedUnitType windspeed_Unit, PrecipitationUnitType precipitation_Unit, string timezone, HourlyOptions hourly, DailyOptions daily, bool current_Weather, TimeformatType timeformat, int past_Days)
+        public WeatherForecastOptions(float latitude, float longitude, TemperatureUnitType temperature_Unit, WindspeedUnitType windspeed_Unit, PrecipitationUnitType precipitation_Unit, string timezone, HourlyOptions hourly, DailyOptions daily, bool current_Weather, TimeformatType timeformat, int past_Days, string start_date, string end_date)
         {
             Latitude = latitude;
             Longitude = longitude;
@@ -78,6 +92,8 @@ namespace OpenMeteo
             Current_Weather = current_Weather;
             Timeformat = timeformat;
             Past_Days = past_Days;
+            Start_date = start_date;
+            End_date = end_date;
         }
         public WeatherForecastOptions(float latitude, float longitude)
         {
@@ -89,6 +105,8 @@ namespace OpenMeteo
             Timeformat = TimeformatType.iso8601;
             Timezone = "GMT";
             Current_Weather = true;
+            Start_date = string.Empty;
+            End_date = string.Empty;
         }
         public WeatherForecastOptions()
         {
@@ -100,6 +118,8 @@ namespace OpenMeteo
             Timeformat = TimeformatType.iso8601;
             Timezone = "GMT";
             Current_Weather = true;
+            Start_date = string.Empty;
+            End_date = string.Empty;
         }
     }
 

@@ -440,6 +440,11 @@ namespace OpenMeteo
 
             uri.Query += "&past_days=" + options.Past_Days;
 
+            if (options.Start_date != string.Empty)
+                uri.Query += "&start_date=" + options.Start_date;
+            if (options.End_date != string.Empty)
+                uri.Query += "&end_date=" + options.End_date;
+
             // Now we iterate through hourly and daily
 
             // Hourly
@@ -518,7 +523,7 @@ namespace OpenMeteo
             if (options.Language != string.Empty)
                 uri.Query += "&language=" + options.Language;
 
-            return uri.ToString().ToLower();
+            return uri.ToString();
         }
     }
 }

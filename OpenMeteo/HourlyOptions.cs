@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace OpenMeteo
 {
+    /// <summary>
+    /// Hourly Weather Variables (https://open-meteo.com/en/docs)
+    /// </summary>
     public class HourlyOptions : IEnumerable<HourlyOptionsParameter>, ICollection<HourlyOptionsParameter>
     {
         public static HourlyOptions All { get { return new HourlyOptions((HourlyOptionsParameter[])Enum.GetValues(typeof(HourlyOptionsParameter))); } }
@@ -195,7 +198,7 @@ namespace OpenMeteo
 
             // Check that index is defined in enum
             if (!Enum.IsDefined(typeof(DailyOptionsParameter), index)) return null;
-            
+
             toFind = (HourlyOptionsParameter)index;
 
             // Return enum value
@@ -207,15 +210,26 @@ namespace OpenMeteo
     // https://open-meteo.com/en/docs #Hourly Parameter Definition
     public enum HourlyOptionsParameter
     {
-        temperature_2m,
+        temperature_2m, 
         relativehumidity_2m,
         dewpoint_2m,
         apparent_temperature,
+        precipitation,
+        rain,
+        showers,
+        snowfall,
+        snow_depth,
+        freezinglevel_height,
+        weathercode,
         pressure_msl,
+        surface_pressure,
         cloudcover,
         cloudcover_low,
         cloudcover_mid,
         cloudcover_high,
+        evapotranspiration,
+        et0_fao_evapotranspiration,
+        vapor_pressure_deficit,
         windspeed_10m,
         windspeed_80m,
         windspeed_120m,
@@ -225,15 +239,6 @@ namespace OpenMeteo
         winddirection_120m,
         winddirection_180m,
         windgusts_10m,
-        shortwave_radiation,
-        direct_radiation,
-        diffuse_radiation,
-        vapor_pressure_deficit,
-        evapotranspiration,
-        precipitation,
-        weathercode,
-        snow_height,
-        freezinglevel_height,
         soil_temperature_0cm,
         soil_temperature_6cm,
         soil_temperature_18cm,
@@ -242,6 +247,16 @@ namespace OpenMeteo
         soil_moisture_1_3cm,
         soil_moisture_3_9cm,
         soil_moisture_9_27cm,
-        soil_moisture_27_81cm
+        soil_moisture_27_81cm,
+        shortwave_radiation,
+        direct_radiation,
+        diffuse_radiation,
+        direct_normal_irradiance,
+        terrestrial_radiation,
+        shortwave_radiation_instant,
+        direct_radiation_instant,
+        diffuse_radiation_instant,
+        direct_normal_irradiance_instant,
+        terrestrial_radiation_instant
     }
 }

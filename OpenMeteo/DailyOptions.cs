@@ -50,7 +50,7 @@ namespace OpenMeteo
 
         public DailyOptions()
         {
-            
+
         }
 
         public DailyOptions(DailyOptionsParameter parameter)
@@ -86,7 +86,7 @@ namespace OpenMeteo
         {
             // Each enum variable represents an integer starting with 0.
             // So we can use our static string[] to get the string representation
-            
+
             // Make sure we aren't our of array
             //if ((int)param < 0 || (int)param >= _allDailyParams.Length) return;
 
@@ -133,7 +133,7 @@ namespace OpenMeteo
 
             // Check that index is defined in enum
             if (!Enum.IsDefined(typeof(DailyOptionsParameter), index)) return null;
-            
+
             // Return enum to 
             return toFind;
         }
@@ -171,18 +171,22 @@ namespace OpenMeteo
 
     public enum DailyOptionsParameter
     {
+        weathercode,
         temperature_2m_max,
         temperature_2m_min,
         apparent_temperature_max,
         apparent_temperature_min,
-        precipitation_sum,
-        precipitation_hours,
-        weathercode,
         sunrise,
         sunset,
+        precipitation_sum,
+        rain_sum,
+        showers_sum,
+        snowfall_sum,
+        precipitation_hours,
         windspeed_10m_max,
         windgusts_10m_max,
         winddirection_10m_dominant,
-        shortwave_radiation_sum
+        shortwave_radiation_sum,
+        et0_fao_evapotranspiration
     }
 }
