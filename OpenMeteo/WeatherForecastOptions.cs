@@ -36,8 +36,8 @@ namespace OpenMeteo
         /// </summary>
         public string Timezone { get; set; }
 
-        public HourlyOptions Hourly { get { return _hourly; } set { _hourly = value; } }
-        public DailyOptions Daily { get { return _daily; } set { _daily = value; } }
+        public HourlyOptions Hourly { get { return _hourly; } set { if (value != null) _hourly = value; } }
+        public DailyOptions Daily { get { return _daily; } set { if (value != null) _daily = value; } }
 
         /// <summary>
         /// Default is "true".
@@ -69,8 +69,12 @@ namespace OpenMeteo
             Windspeed_Unit = windspeed_Unit;
             Precipitation_Unit = precipitation_Unit;
             Timezone = timezone;
-            Hourly = hourly;
-            Daily = daily;
+
+            if (hourly != null)
+                Hourly = hourly;
+            if (daily != null)
+                Daily = daily;
+
             Current_Weather = current_Weather;
             Timeformat = timeformat;
             Past_Days = past_Days;
