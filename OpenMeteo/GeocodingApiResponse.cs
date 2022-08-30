@@ -10,6 +10,5 @@ namespace OpenMeteo
         [JsonPropertyName("results")]
         public LocationData[]? Locations { get; set; }
         public float Generationtime_ms { get; set; }
-
     }
 }
