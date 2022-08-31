@@ -6,7 +6,13 @@ namespace OpenMeteo
 {
     public class DailyOptions : IEnumerable, ICollection<DailyOptionsParameter>
     {
+        /// <summary>
+        /// Gets a new object containing every parameter
+        /// </summary>
+        /// <returns></returns>
         public static DailyOptions All { get { return new DailyOptions((DailyOptionsParameter[])Enum.GetValues(typeof(DailyOptionsParameter))); } }
+        
+        [Obsolete]
         private static readonly string[] _allDailyParams = new string[]
         {
             "temperature_2m_max",
@@ -23,6 +29,12 @@ namespace OpenMeteo
             "winddirection_10m_dominant",
             "shortwave_radiation_sum"
         };
+        
+        /// <summary>
+        /// Gets a copy of elements contained in the List.
+        /// </summary>
+        /// <typeparam name="DailyOptionsParameter"></typeparam>
+        /// <returns>A copy of elements contained in the List</returns>
         public List<DailyOptionsParameter> Parameter { get { return new List<DailyOptionsParameter>(_parameter); } }
 
         public int Count => _parameter.Count;
@@ -30,6 +42,7 @@ namespace OpenMeteo
         public bool IsReadOnly => false;
 
         private readonly List<DailyOptionsParameter> _parameter = new List<DailyOptionsParameter>();
+        
         /*public DailyOptions(string[] parameter)
         {
             foreach (string s in parameter)
@@ -106,6 +119,7 @@ namespace OpenMeteo
             }
         }
 
+        [Obsolete]
         private bool IsValidParameter(string s)
         {
             bool found = false;
@@ -118,6 +132,7 @@ namespace OpenMeteo
             return found;
         }
 
+        [Obsolete]
         private DailyOptionsParameter? DailyOptionsStringToEnum(string option)
         {
             if (!IsValidParameter(option)) return null;
