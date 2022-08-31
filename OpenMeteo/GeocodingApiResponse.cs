@@ -5,6 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace OpenMeteo
 {
+    /// <summary>
+    /// Geocoding API response
+    /// </summary>
     public class GeocodingApiResponse
     {
         /// <summary>
