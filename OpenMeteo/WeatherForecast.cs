@@ -65,7 +65,7 @@ namespace OpenMeteo
         /// </summary>
 
         [JsonPropertyName("hourly_units")]
-        public Hourly_Units? Hourly_units { get; set; }
+        public HourlyUnits? Hourly_units { get; set; }
 
         /// <summary>
         /// For each selected weather variable, data will be returned as a floating point array. 
