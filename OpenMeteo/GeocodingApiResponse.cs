@@ -13,14 +13,12 @@ namespace OpenMeteo
         /// <summary>
         /// Array of found locations
         /// </summary>
-        /// <value></value>
         [JsonPropertyName("results")]
         public LocationData[]? Locations { get; set; }
 
         /// <summary>
         /// Generation time of the weather forecast in milliseconds.
         /// </summary>
-        /// <value></value>
         public float Generationtime_ms { get; set; }
     }
 }
