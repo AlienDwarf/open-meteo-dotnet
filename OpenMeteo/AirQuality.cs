@@ -14,7 +14,7 @@ namespace OpenMeteo
         public HourlyValues? Hourly { get; set; }
         public HourlyUnits? Hourly_Units { get; set; }
 
-        public struct HourlyUnits
+        public class HourlyUnits
         {
             public string? time { get; set; }
             public string? pm10 { get; set; }
@@ -35,19 +35,19 @@ namespace OpenMeteo
             public string? ragweed_pollen { get; set; }
         }
 
-        public struct HourlyValues
+        public class HourlyValues
         {
             public string[]? Time { get; set; }
-            public float[]? Pm10 { get; set; }
-            public float[]? Pm2_5 { get; set; }
-            public float[]? Carbon_monoxide { get; set; }
-            public float[]? Nitrogen_dioxide { get; set; }
-            public float[]? Sulphur_dioxide { get; set; }
-            public float[]? Ozone { get; set; }
-            public float[]? Aerosol_optical_depth { get; set; }
-            public float[]? Dust { get; set; }
-            public float[]? Uv_index { get; set; }
-            public float[]? Uv_index_clear_sky { get; set; }
+            public float?[]? Pm10 { get; set; }
+            public float?[]? Pm2_5 { get; set; }
+            public float?[]? Carbon_monoxide { get; set; }
+            public float?[]? Nitrogen_dioxide { get; set; }
+            public float?[]? Sulphur_dioxide { get; set; }
+            public float?[]? Ozone { get; set; }
+            public float?[]? Aerosol_optical_depth { get; set; }
+            public float?[]? Dust { get; set; }
+            public float?[]? Uv_index { get; set; }
+            public float?[]? Uv_index_clear_sky { get; set; }
 
             /// <summary>
             /// Only available in Europe during pollen season with 4 days forecast
