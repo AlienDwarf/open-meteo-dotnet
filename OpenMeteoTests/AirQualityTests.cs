@@ -22,7 +22,7 @@ namespace OpenMeteoTests
                 Longitude = 13.4115f
         };
 
-            var res = await client.QueryAsync(options);
+            AirQuality res = await client.QueryAsync(options);
 
             Assert.IsNotNull(res);
             Assert.IsNotNull(res?.Hourly);
