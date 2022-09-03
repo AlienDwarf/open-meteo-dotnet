@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace OpenMeteo
 {
     /// <summary>
@@ -5,34 +7,73 @@ namespace OpenMeteo
     /// </summary>
     public class AirQuality
     {
+        /// <summary>
+        /// WGS84 of the center of the weather grid-cell which was used to generate this forecast.
+        /// </summary>
+        [JsonPropertyName("latitude")]
         public float Latitude { get; set; }
+
+        /// <summary>
+        /// WGS84 of the center of the weather grid-cell which was used to generate this forecast.
+        /// </summary>
+        [JsonPropertyName("longitude")]
         public float Longitude { get; set; }
+
+        /// <summary>
+        /// Generation time of the weather forecast in milliseconds.
+        /// </summary>
+        [JsonPropertyName("generationtime_ms")]
         public float GenerationTime { get; set; }
+
+        /// <summary>
+        /// Timezone offset from <see cref="AirQualityOptions.Timezone"/>
+        /// </summary>
+        [JsonPropertyName("utc_offset_seconds")]
         public int UtcOffset { get; set; }
+
+        /// <summary>
+        /// Timezone identifier
+        /// </summary>
+        [JsonPropertyName("timezone")]
         public string? Timezone { get; set; }
+
+        /// <summary>
+        /// Timezone abbreviation
+        /// </summary>
+        [JsonPropertyName("timezone_abbreviation")]
         public string? TimezoneAbbreviation { get; set; }
+
+        /// <summary>
+        /// Returned data for each selected variable in <see cref="AirQualityOptions.Hourly"/>
+        /// </summary>
+        [JsonPropertyName("hourly")]
         public HourlyValues? Hourly { get; set; }
+
+        /// <summary>
+        /// For each selected variable in <see cref="AirQuality.Hourly"/>, the unit
+        /// </summary>
+        [JsonPropertyName("hourly_units")]
         public HourlyUnits? Hourly_Units { get; set; }
 
         public class HourlyUnits
         {
-            public string? time { get; set; }
-            public string? pm10 { get; set; }
-            public string? pm2_5 { get; set; }
-            public string? carbon_monoxide { get; set; }
-            public string? nitrogen_dioxide { get; set; }
-            public string? sulphur_dioxide { get; set; }
-            public string? ozone { get; set; }
-            public string? aerosol_optical_depth { get; set; }
-            public string? dust { get; set; }
-            public string? uv_index { get; set; }
-            public string? uv_index_clear_sky { get; set; }
-            public string? alder_pollen { get; set; }
-            public string? birch_pollen { get; set; }
-            public string? grass_pollen { get; set; }
-            public string? mugwort_pollen { get; set; }
-            public string? olive_pollen { get; set; }
-            public string? ragweed_pollen { get; set; }
+            public string? Time { get; set; }
+            public string? Pm10 { get; set; }
+            public string? Pm2_5 { get; set; }
+            public string? Carbon_monoxide { get; set; }
+            public string? Nitrogen_dioxide { get; set; }
+            public string? Sulphur_dioxide { get; set; }
+            public string? Ozone { get; set; }
+            public string? Aerosol_optical_depth { get; set; }
+            public string? Dust { get; set; }
+            public string? Uv_index { get; set; }
+            public string? Uv_index_clear_sky { get; set; }
+            public string? Alder_pollen { get; set; }
+            public string? Birch_pollen { get; set; }
+            public string? Grass_pollen { get; set; }
+            public string? Mugwort_pollen { get; set; }
+            public string? Olive_pollen { get; set; }
+            public string? Ragweed_pollen { get; set; }
         }
 
         public class HourlyValues

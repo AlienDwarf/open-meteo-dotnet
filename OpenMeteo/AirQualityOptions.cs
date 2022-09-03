@@ -18,13 +18,39 @@ namespace OpenMeteo
         /// </summary>
         public float Longitude { get; set; }
 
-
+        /// <summary>
+        /// A list of air quality variables which should be returned.
+        /// </summary>
         public HourlyOptions Hourly { get { return _hourly; } set { if (value != null) _hourly = value; } }
+
+        /// <summary>
+        /// Default value: "auto". Other values: "cams_europe" for europe or "cams_global" for global domain
+        /// </summary>
         public string Domains { get; set; }
+
+        /// <summary>
+        /// Default value: "iso8601". Other options: "unixtime"
+        /// </summary>
         public string Timeformat { get; set; }
+
+        /// <summary>
+        /// Default value: "GMT".
+        /// </summary>
         public string Timezone { get; set; }
+
+        /// <summary>
+        /// Past days data which should also be returned
+        /// </summary>
         public int Past_Days { get; set; }
+
+        /// <summary>
+        /// A day must be specified as an ISO8601
+        /// </summary>
         public string Start_date { get; set; }
+
+        /// <summary>
+        /// A day must be specified as an ISO8601
+        /// </summary>
         public string End_date { get; set; }
 
         private HourlyOptions _hourly = new HourlyOptions();
