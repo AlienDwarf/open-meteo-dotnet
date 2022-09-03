@@ -20,6 +20,7 @@ namespace OpenMeteo
             _httpClient.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")
                 );
+            _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Dotnet");
 
         }
     }

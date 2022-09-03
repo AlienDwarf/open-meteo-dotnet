@@ -48,7 +48,7 @@ namespace OpenMeteo
         public float[]? Shortwave_radiation { get; set; }
         public float[]? Direct_radiation { get; set; }
         public float[]? Diffuse_radiation { get; set; }
-        public float[]? Direct_normal_irradiance { get; set; }
+        public float?[]? Direct_normal_irradiance { get; set; } // Issue created https://github.com/open-meteo/open-meteo/issues/114
         public float[]? Terrestrial_radiation { get; set; }
         public float[]? Shortwave_radiation_instant { get; set; }
         public float[]? Direct_radiation_instant { get; set; }

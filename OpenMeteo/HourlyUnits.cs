@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OpenMeteo
 {
-    public class Hourly_Units
+    public class HourlyUnits
     {
         public string? Time { get; set; }
         public string? Temperature_2m { get; set; }

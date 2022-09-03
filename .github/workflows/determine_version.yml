@@ -12,9 +12,13 @@ on:
     branches:
       - master
       - develop
+      - '*'
     paths:
       - '**/*.cs'
       - '**/*.csproj'
+    tags:
+      - "v*"
+  
 
 env:
   GIT_BRANCH: 'master'
