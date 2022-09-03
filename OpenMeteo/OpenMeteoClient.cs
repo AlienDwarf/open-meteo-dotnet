@@ -13,6 +13,7 @@ namespace OpenMeteo
     {
         private readonly string _weatherApiUrl = "https://api.open-meteo.com/v1/forecast";
         private readonly string _geocodeApiUrl = "https://geocoding-api.open-meteo.com/v1/search";
+        private readonly string _airQualityApiUrl = "https://air-quality-api.open-meteo.com/v1/air-quality";
         private readonly HttpController httpController;
         private readonly System.Globalization.CultureInfo _culture;
 
@@ -137,6 +138,16 @@ namespace OpenMeteo
         }
 
         /// <summary>
+        /// Gets air quality data for a given location with individual options
+        /// </summary>
+        /// <param name="options">options for air quality request</param>
+        /// <returns><see cref="AirQuality"/> if successfull or <see cref="null"/> if failed</returns>
+        public async Task<AirQuality?> QueryAsync(AirQualityOptions options)
+        {
+            return await GetAirQualityAsync(options);
+        }
+
+        /// <summary>
         /// Performs one GET-Request to Open-Meteo Geocoding API 
         /// </summary>
         /// <param name="location">Name of a location or city</param>
@@ -164,6 +175,24 @@ namespace OpenMeteo
             if (response == null || response?.Locations == null)
                 return null;
             return (response.Locations[0].Latitude, response.Locations[0].Longitude);
+        }
+
+        private async Task<AirQuality?> GetAirQualityAsync(AirQualityOptions options)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpController.Client.GetAsync(MergeUrlWithOptions(_airQualityApiUrl, options));
+                response.EnsureSuccessStatusCode();
+
+                AirQuality? airQuality = await JsonSerializer.DeserializeAsync<AirQuality>(await response.Content.ReadAsStreamAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                return airQuality;
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+                return null;
+            }
         }
 
         /// <summary>
@@ -522,6 +551,66 @@ namespace OpenMeteo
 
             if (options.Language != string.Empty)
                 uri.Query += "&language=" + options.Language;
+
+            return uri.ToString();
+        }
+
+        /// <summary>
+        /// Combines a given url with an options object to create a url for GET requests
+        /// </summary>
+        /// <returns>url+queryString</returns>
+        private string MergeUrlWithOptions(string url, AirQualityOptions options)
+        {
+            if (options == null) return url;
+
+            UriBuilder uri = new UriBuilder(url);
+            bool isFirstParam = false;
+
+            // If no query given, add '?' to start the query string
+            if (uri.Query == string.Empty)
+            {
+                uri.Query = "?";
+
+                // isFirstParam becomes true because the query string is new
+                isFirstParam = true;
+            }
+
+            // Now we check every property and set the value, if neccessary
+            if (isFirstParam)
+                uri.Query += "latitude=" + options.Latitude;
+            else
+                uri.Query += "&latitude=" + options.Latitude;
+
+            uri.Query += "&longitude=" + options.Longitude;
+
+            if (options.Domains != string.Empty)
+                uri.Query += "&domains=" + options.Domains;
+
+            if (options.Timeformat != string.Empty)
+                uri.Query += "&timeformat=" + options.Timeformat;
+
+            if (options.Timezone != string.Empty)
+                uri.Query += "&timezone=" + options.Timezone;
+
+            // Finally add hourly array
+            if (options.Hourly.Count >= 0)
+            {
+                bool firstHourlyElement = true;
+                uri.Query += "&hourly=";
+
+                foreach (var option in options.Hourly)
+                {
+                    if (firstHourlyElement)
+                    {
+                        uri.Query += option.ToString();
+                        firstHourlyElement = false;
+                    }
+                    else
+                    {
+                        uri.Query += "," + option.ToString();
+                    }
+                }
+            }
 
             return uri.ToString();
         }
