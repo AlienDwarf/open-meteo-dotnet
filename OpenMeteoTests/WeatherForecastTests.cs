@@ -64,8 +64,8 @@ namespace OpenMeteoTests
         {
             OpenMeteoClient client = new();
             var options = new WeatherForecastOptions(
-                0, 
-                0, 
+                0f, 
+                0f, 
                 TemperatureUnitType.celsius, 
                 WindspeedUnitType.kmh, 
                 PrecipitationUnitType.mm, 
