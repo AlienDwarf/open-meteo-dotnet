@@ -20,13 +20,31 @@ namespace OpenMeteoTests
                 Hourly = AirQualityOptions.HourlyOptions.All,
                 Latitude = 52.5235f,
                 Longitude = 13.4115f
-        };
+            };
 
             AirQuality res = await client.QueryAsync(options);
 
             Assert.IsNotNull(res);
             Assert.IsNotNull(res?.Hourly);
             Assert.IsNotNull(res?.Hourly_Units);
+        }
+
+        [TestMethod]
+        public void Air_Quality_Sync_Test()
+        {
+            OpenMeteoClient client = new();
+            AirQualityOptions options = new()
+            {
+                Hourly = AirQualityOptions.HourlyOptions.All,
+                Latitude = 52.5235f,
+                Longitude = 13.4115f
+            };
+            var res = client.Query(options);
+
+            Assert.IsNotNull(res);
+            Assert.IsNotNull(res?.Hourly);
+            Assert.IsNotNull(res?.Hourly_Units);
+            Assert.IsTrue(res.GenerationTime > 0);
         }
     }
 }

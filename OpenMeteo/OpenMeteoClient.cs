@@ -177,6 +177,36 @@ namespace OpenMeteo
             return (response.Locations[0].Latitude, response.Locations[0].Longitude);
         }
 
+        public WeatherForecast? Query(WeatherForecastOptions options)
+        {
+            return QueryAsync(options).GetAwaiter().GetResult();
+        }
+
+        public WeatherForecast? Query(float latitude, float longitude)
+        {
+            return QueryAsync(latitude, longitude).GetAwaiter().GetResult();
+        }
+
+        public WeatherForecast? Query(string location, WeatherForecastOptions options)
+        {
+            return QueryAsync(location, options).GetAwaiter().GetResult();
+        }
+
+        public WeatherForecast? Query(GeocodingOptions options)
+        {
+            return QueryAsync(options).GetAwaiter().GetResult();
+        }
+
+        public WeatherForecast? Query(string location)
+        {
+            return QueryAsync(location).GetAwaiter().GetResult();
+        }
+
+        public AirQuality? Query(AirQualityOptions options)
+        {
+            return QueryAsync(options).GetAwaiter().GetResult();
+        }
+
         private async Task<AirQuality?> GetAirQualityAsync(AirQualityOptions options)
         {
             try
