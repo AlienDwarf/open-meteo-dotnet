@@ -64,19 +64,6 @@ namespace OpenMeteo
             }
         }
 
-        [Obsolete]
-        private bool IsValidParameter(string s)
-        {
-            bool found = false;
-            foreach (string str in _allHourlyParams)
-            {
-                if (found) break;
-                if (s == str)
-                    found = true;
-            }
-            return found;
-        }
-
         public IEnumerator<HourlyOptionsParameter> GetEnumerator()
         {
             return _parameter.GetEnumerator();
@@ -107,28 +94,6 @@ namespace OpenMeteo
             return _parameter.Remove(item);
         }
 
-        [Obsolete]
-        public HourlyOptionsParameter? HourlyOptionsStringToEnum(string option)
-        {
-            if (!IsValidParameter(option)) return null;
-
-            HourlyOptionsParameter toFind;
-
-            // Get array index of valid parameter == (int)enum
-            int index = Array.IndexOf(_allHourlyParams, option);
-
-            // Again check that we found an index
-            // (double check bc option we checked that option is a valid param already)
-            if (index == -1) return null;
-
-            // Check that index is defined in enum
-            if (!Enum.IsDefined(typeof(DailyOptionsParameter), index)) return null;
-
-            toFind = (HourlyOptionsParameter)index;
-
-            // Return enum value
-            return toFind;
-        }
     }
 
     // This is converted to string so it has to be the exact same name like in 
