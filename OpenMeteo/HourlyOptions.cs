@@ -109,14 +109,6 @@ namespace OpenMeteo
 
         public void Add(HourlyOptionsParameter param)
         {
-            // Each enum variable represents an integer starting with 0.
-            // So we can use our static string[] to get the string representation
-
-            // Make sure we aren't our of array
-            //if ((int)param < 0 || (int)param >= _allHourlyParams.Length) return false;
-
-            //string paramToAdd = _allHourlyParams[(int)param];
-
             // Check that the parameter isn't already added
             if (this._parameter.Contains(param)) return;
 
