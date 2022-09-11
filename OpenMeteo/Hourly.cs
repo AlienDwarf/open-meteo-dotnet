@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
 namespace OpenMeteo
 {
@@ -48,12 +49,147 @@ namespace OpenMeteo
         public float[]? Shortwave_radiation { get; set; }
         public float[]? Direct_radiation { get; set; }
         public float[]? Diffuse_radiation { get; set; }
-        public float?[]? Direct_normal_irradiance { get; set; } // Issue created https://github.com/open-meteo/open-meteo/issues/114
+        public float[]? Direct_normal_irradiance { get; set; } // Issue created https://github.com/open-meteo/open-meteo/issues/114
         public float[]? Terrestrial_radiation { get; set; }
         public float[]? Shortwave_radiation_instant { get; set; }
         public float[]? Direct_radiation_instant { get; set; }
         public float[]? Diffuse_radiation_instant { get; set; }
         public float[]? Direct_normal_irradiance_instant { get; set; }
         public float[]? Terrestrial_radiation_instant { get; set; }
+
+        // Open-Meteo v0.0.74 - Pressure Levels
+        public float?[]? Temperature_1000hPa { get; set; }
+        public float?[]? Temperature_975hPa { get; set; }
+        public float?[]? Temperature_950hPa { get; set; }
+        public float?[]? Temperature_925hPa { get; set; }
+        public float?[]? Temperature_900hPa { get; set; }
+        public float?[]? Temperature_850hPa { get; set; }
+        public float?[]? Temperature_800hPa { get; set; }
+        public float?[]? Temperature_700hPa { get; set; }
+        public float?[]? Temperature_600hPa { get; set; }
+        public float?[]? Temperature_500hPa { get; set; }
+        public float?[]? Temperature_400hPa { get; set; }
+        public float?[]? Temperature_300hPa { get; set; }
+        public float?[]? Temperature_250hPa { get; set; }
+        public float?[]? Temperature_200hPa { get; set; }
+        public float?[]? Temperature_150hPa { get; set; }
+        public float?[]? Temperature_100hPa { get; set; }
+        public float?[]? Temperature_70hPa { get; set; }
+        public float?[]? Temperature_50hPa { get; set; }
+        public float?[]? Temperature_30hPa { get; set; }
+        public float?[]? Dewpoint_1000hPa { get; set; }
+        public float?[]? Dewpoint_975hPa { get; set; }
+        public float?[]? Dewpoint_950hPa { get; set; }
+        public float?[]? Dewpoint_925hPa { get; set; }
+        public float?[]? Dewpoint_900hPa { get; set; }
+        public float?[]? Dewpoint_850hPa { get; set; }
+        public float?[]? Dewpoint_800hPa { get; set; }
+        public float?[]? Dewpoint_700hPa { get; set; }
+        public float?[]? Dewpoint_600hPa { get; set; }
+        public float?[]? Dewpoint_500hPa { get; set; }
+        public float?[]? Dewpoint_400hPa { get; set; }
+        public float?[]? Dewpoint_300hPa { get; set; }
+        public float?[]? Dewpoint_250hPa { get; set; }
+        public float?[]? Dewpoint_200hPa { get; set; }
+        public float?[]? Dewpoint_150hPa { get; set; }
+        public float?[]? Dewpoint_100hPa { get; set; }
+        public float?[]? Dewpoint_70hPa { get; set; }
+        public float?[]? Dewpoint_50hPa { get; set; }
+        public float?[]? Dewpoint_30hPa { get; set; }
+        public float?[]? Relativehumidity_1000hPa { get; set; }
+        public float?[]? Relativehumidity_975hPa { get; set; }
+        public float?[]? Relativehumidity_950hPa { get; set; }
+        public float?[]? Relativehumidity_925hPa { get; set; }
+        public float?[]? Relativehumidity_900hPa { get; set; }
+        public float?[]? Relativehumidity_850hPa { get; set; }
+        public float?[]? Relativehumidity_800hPa { get; set; }
+        public float?[]? Relativehumidity_700hPa { get; set; }
+        public float?[]? Relativehumidity_600hPa { get; set; }
+        public float?[]? Relativehumidity_500hPa { get; set; }
+        public float?[]? Relativehumidity_400hPa { get; set; }
+        public float?[]? Relativehumidity_300hPa { get; set; }
+        public float?[]? Relativehumidity_250hPa { get; set; }
+        public float?[]? Relativehumidity_200hPa { get; set; }
+        public float?[]? Relativehumidity_150hPa { get; set; }
+        public float?[]? Relativehumidity_100hPa { get; set; }
+        public float?[]? Relativehumidity_70hPa { get; set; }
+        public float?[]? Relativehumidity_50hPa { get; set; }
+        public float?[]? Relativehumidity_30hPa { get; set; }
+        public float?[]? Cloudcover_1000hPa { get; set; }
+        public float?[]? Cloudcover_975hPa { get; set; }
+        public float?[]? Cloudcover_950hPa { get; set; }
+        public float?[]? Cloudcover_925hPa { get; set; }
+        public float?[]? Cloudcover_900hPa { get; set; }
+        public float?[]? Cloudcover_850hPa { get; set; }
+        public float?[]? Cloudcover_800hPa { get; set; }
+        public float?[]? Cloudcover_700hPa { get; set; }
+        public float?[]? Cloudcover_600hPa { get; set; }
+        public float?[]? Cloudcover_500hPa { get; set; }
+        public float?[]? Cloudcover_400hPa { get; set; }
+        public float?[]? Cloudcover_300hPa { get; set; }
+        public float?[]? Cloudcover_250hPa { get; set; }
+        public float?[]? Cloudcover_200hPa { get; set; }
+        public float?[]? Cloudcover_150hPa { get; set; }
+        public float?[]? Cloudcover_100hPa { get; set; }
+        public float?[]? Cloudcover_70hPa { get; set; }
+        public float?[]? Cloudcover_50hPa { get; set; }
+        public float?[]? Cloudcover_30hPa { get; set; }
+        public float?[]? Windspeed_1000hPa { get; set; }
+        public float?[]? Windspeed_975hPa { get; set; }
+        public float?[]? Windspeed_950hPa { get; set; }
+        public float?[]? Windspeed_925hPa { get; set; }
+        public float?[]? Windspeed_900hPa { get; set; }
+        public float?[]? Windspeed_850hPa { get; set; }
+        public float?[]? Windspeed_800hPa { get; set; }
+        public float?[]? Windspeed_700hPa { get; set; }
+        public float?[]? Windspeed_600hPa { get; set; }
+        public float?[]? Windspeed_500hPa { get; set; }
+        public float?[]? Windspeed_400hPa { get; set; }
+        public float?[]? Windspeed_300hPa { get; set; }
+        public float?[]? Windspeed_250hPa { get; set; }
+        public float?[]? Windspeed_200hPa { get; set; }
+        public float?[]? Windspeed_150hPa { get; set; }
+        public float?[]? Windspeed_100hPa { get; set; }
+        public float?[]? Windspeed_70hPa { get; set; }
+        public float?[]? Windspeed_50hPa { get; set; }
+        public float?[]? Windspeed_30hPa { get; set; }
+        public float?[]? Winddirection_1000hPa { get; set; }
+        public float?[]? Winddirection_975hPa { get; set; }
+        public float?[]? Winddirection_950hPa { get; set; }
+        public float?[]? Winddirection_925hPa { get; set; }
+        public float?[]? Winddirection_900hPa { get; set; }
+        public float?[]? Winddirection_850hPa { get; set; }
+        public float?[]? Winddirection_800hPa { get; set; }
+        public float?[]? Winddirection_700hPa { get; set; }
+        public float?[]? Winddirection_600hPa { get; set; }
+        public float?[]? Winddirection_500hPa { get; set; }
+        public float?[]? Winddirection_400hPa { get; set; }
+        public float?[]? Winddirection_300hPa { get; set; }
+        public float?[]? Winddirection_250hPa { get; set; }
+        public float?[]? Winddirection_200hPa { get; set; }
+        public float?[]? Winddirection_150hPa { get; set; }
+        public float?[]? Winddirection_100hPa { get; set; }
+        public float?[]? Winddirection_70hPa { get; set; }
+        public float?[]? Winddirection_50hPa { get; set; }
+        public float?[]? Winddirection_30hPa { get; set; }
+        public float?[]? Geopotential_height_1000hPa { get; set; }
+        public float?[]? Geopotential_height_975hPa { get; set; }
+        public float?[]? Geopotential_height_950hPa { get; set; }
+        public float?[]? Geopotential_height_925hPa { get; set; }
+        public float?[]? Geopotential_height_900hPa { get; set; }
+        public float?[]? Geopotential_height_850hPa { get; set; }
+        public float?[]? Geopotential_height_800hPa { get; set; }
+        public float?[]? Geopotential_height_700hPa { get; set; }
+        public float?[]? Geopotential_height_600hPa { get; set; }
+        public float?[]? Geopotential_height_500hPa { get; set; }
+        public float?[]? Geopotential_height_400hPa { get; set; }
+        public float?[]? Geopotential_height_300hPa { get; set; }
+        public float?[]? Geopotential_height_250hPa { get; set; }
+        public float?[]? Geopotential_height_200hPa { get; set; }
+        public float?[]? Geopotential_height_150hPa { get; set; }
+        public float?[]? Geopotential_height_100hPa { get; set; }
+        public float?[]? Geopotential_height_70hPa { get; set; }
+        public float?[]? Geopotential_height_50hPa { get; set; }
+        public float?[]? Geopotential_height_30hPa { get; set; }
     }
 }
