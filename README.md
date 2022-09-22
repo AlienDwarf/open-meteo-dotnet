@@ -11,6 +11,7 @@ This project is still in development. There *will* be major changes in the codeb
 
 ## 🎯 Roadmap
 - Documentation and wiki
+- Throw exceptions instead of returning *null* (v0.2)
 
 ## 🔨 Installation/Build
 
