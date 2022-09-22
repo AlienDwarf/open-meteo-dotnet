@@ -50,7 +50,7 @@ namespace OpenMeteo
         public HourlyValues? Hourly { get; set; }
 
         /// <summary>
-        /// For each selected variable in <see cref="AirQuality.Hourly"/>, the unit
+        /// The unit for each selected variable in <see cref="AirQuality.Hourly"/>
         /// </summary>
         [JsonPropertyName("hourly_units")]
         public HourlyUnits? Hourly_Units { get; set; }
