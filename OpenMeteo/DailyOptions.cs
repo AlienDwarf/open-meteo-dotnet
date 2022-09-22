@@ -24,24 +24,6 @@ namespace OpenMeteo
         public bool IsReadOnly => false;
 
         private readonly List<DailyOptionsParameter> _parameter = new List<DailyOptionsParameter>();
-        
-        /*public DailyOptions(string[] parameter)
-        {
-            foreach (string s in parameter)
-            {
-                if (!IsValidParameter(s.ToLower()))
-                    throw new ArgumentException(s + " is not a valid parameter");
-                this._parameter.Add(s);
-            }
-        }
-
-        public DailyOptions(string parameter)
-        {
-            string s = parameter.ToLower();
-            if (!IsValidParameter(s))
-                throw new ArgumentException(s + " is not a valid parameter");
-            this._parameter.Add(s);
-        }*/
 
         public DailyOptions()
         {
