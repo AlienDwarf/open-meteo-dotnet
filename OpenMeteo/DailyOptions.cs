@@ -12,24 +12,6 @@ namespace OpenMeteo
         /// <returns></returns>
         public static DailyOptions All { get { return new DailyOptions((DailyOptionsParameter[])Enum.GetValues(typeof(DailyOptionsParameter))); } }
         
-        [Obsolete]
-        private static readonly string[] _allDailyParams = new string[]
-        {
-            "temperature_2m_max",
-            "temperature_2m_min",
-            "apparent_temperature_max",
-            "apparent_temperature_min",
-            "precipitation_sum",
-            "precipitation_hours",
-            "weathercode",
-            "sunrise",
-            "sunset",
-            "windspeed_10m_max",
-            "windgusts_10m_max",
-            "winddirection_10m_dominant",
-            "shortwave_radiation_sum"
-        };
-        
         /// <summary>
         /// Gets a copy of elements contained in the List.
         /// </summary>
