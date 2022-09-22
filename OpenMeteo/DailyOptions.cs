@@ -61,16 +61,8 @@ namespace OpenMeteo
         /// <returns>True if successfully added else false</returns>
         public void Add(DailyOptionsParameter param)
         {
-            // Each enum variable represents an integer starting with 0.
-            // So we can use our static string[] to get the string representation
-
-            // Make sure we aren't our of array
-            //if ((int)param < 0 || (int)param >= _allDailyParams.Length) return;
-
-            //string paramToAdd = _allDailyParams[(int)param];
-
             // Check that the parameter isn't already added
-            if (this._parameter.Contains(param)) return;
+            if (_parameter.Contains(param)) return;
 
             _parameter.Add(param);
         }
