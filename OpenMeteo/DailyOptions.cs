@@ -54,11 +54,6 @@ namespace OpenMeteo
             }
         }
 
-        /// <summary>
-        /// Add parameter
-        /// </summary>
-        /// <param name="param"></param>
-        /// <returns>True if successfully added else false</returns>
         public void Add(DailyOptionsParameter param)
         {
             // Check that the parameter isn't already added
@@ -73,40 +68,6 @@ namespace OpenMeteo
             {
                 Add(paramToAdd);
             }
-        }
-
-        [Obsolete]
-        private bool IsValidParameter(string s)
-        {
-            bool found = false;
-            foreach (string str in _allDailyParams)
-            {
-                if (found) break;
-                if (s == str)
-                    found = true;
-            }
-            return found;
-        }
-
-        [Obsolete]
-        private DailyOptionsParameter? DailyOptionsStringToEnum(string option)
-        {
-            if (!IsValidParameter(option)) return null;
-
-            DailyOptionsParameter? toFind = null;
-
-            // Get array index of valid parameter == (int)enum
-            int index = Array.IndexOf(_allDailyParams, option);
-
-            // Again check that we found an index
-            // (double check bc option we checked that option is a valid param already)
-            if (index == -1) return null;
-
-            // Check that index is defined in enum
-            if (!Enum.IsDefined(typeof(DailyOptionsParameter), index)) return null;
-
-            // Return enum to 
-            return toFind;
         }
 
         public void Clear()
