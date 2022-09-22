@@ -40,7 +40,8 @@ namespace OpenMeteo
         [JsonPropertyName("country_code")]
         public string? CountyCode { get; set; }
         public string? Country { get; set; }
-        public int CountyId { get; set; }
+        [JsonPropertyName("country_id")]
+        public int CountryId { get; set; }
         public int Population { get; set; }
         public string[]? Postcodes { get; set; }
         public string? Admin1 { get; set; }
