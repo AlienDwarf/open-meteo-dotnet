@@ -37,7 +37,7 @@ namespace OpenMeteoTests
         {
             WeatherForecastOptions options = new WeatherForecastOptions(
                 10.5f, 20.5f, TemperatureUnitType.fahrenheit, WindspeedUnitType.kmh, PrecipitationUnitType.mm, "auto",
-                new HourlyOptions(), new DailyOptions(), false, TimeformatType.iso8601, 1, "", "");
+                new HourlyOptions(), new DailyOptions(), false, TimeformatType.iso8601, 1, "", "", new WeatherModelOptions(), CellSelectionType.land);
 
             Assert.IsFalse(options.Current_Weather);
             Assert.AreEqual(10.5f, options.Latitude);
@@ -60,7 +60,7 @@ namespace OpenMeteoTests
         {
             WeatherForecastOptions options = new WeatherForecastOptions(
                 10.5f, 20.5f, TemperatureUnitType.fahrenheit, WindspeedUnitType.kmh, PrecipitationUnitType.mm, "auto",
-                new HourlyOptions(), new DailyOptions(), false, TimeformatType.iso8601, 1, "", "");
+                new HourlyOptions(), new DailyOptions(), false, TimeformatType.iso8601, 1, "", "", new WeatherModelOptions(), CellSelectionType.land);
 
             options.Daily.Add(DailyOptionsParameter.sunset);
             options.Daily.Add(DailyOptionsParameter.sunrise);

@@ -333,134 +333,6 @@ namespace OpenMeteo
             }
         }
 
-        [Obsolete]
-        private string _MergeUrlWithOptions(string url, GeocodingOptions options)
-        {
-            if (options == null) return url;
-
-            UriBuilder uri = new UriBuilder(url);
-            bool isFirstParam = false;
-            string paramToAdd = "";
-
-            // If no query given, add '?' to start the query string
-            if (uri.Query == string.Empty)
-            {
-                uri.Query = "?";
-
-                // isFirstParam becomes true because the query string is new
-                isFirstParam = true;
-            }
-
-            // Iterate through options object and get the key=value pairs
-            foreach (PropertyInfo propertyInfo in options.GetType().GetProperties())
-            {
-                // If key:null ignore it
-                if (propertyInfo.GetValue(options, null) == null)
-                    continue;
-
-                var key = propertyInfo.Name;
-                var value = propertyInfo.GetValue(options, null);
-
-                // if we got another object (Daily, Hourly) skip it
-                if (propertyInfo.PropertyType.IsClass && propertyInfo.PropertyType != typeof(string))
-                    continue;
-                // If value is an empty string ignore it
-                if (propertyInfo.PropertyType == typeof(string))
-                    if ((string)propertyInfo.GetValue(options, null) == string.Empty)
-                        continue;
-
-                // The first parameter starts without "&"
-                if (isFirstParam)
-                {
-                    paramToAdd = key + "=" + value;
-                    isFirstParam = false;
-                }
-                else
-                {
-                    paramToAdd = "&" + key + "=" + value;
-                }
-
-                // concatenate the string to query string
-                uri.Query += paramToAdd;
-            }
-
-            // Finally return the whole url in lowercase
-            return uri.ToString().ToLower();
-        }
-
-        [Obsolete]
-        private string _MergeUrlWithOptions(string url, WeatherForecastOptions? options)
-        {
-            if (options == null) return url;
-
-            UriBuilder uri = new UriBuilder(url);
-            bool isFirstParam = false;
-            string paramToAdd = "";
-
-
-            // If no query given, add '?' to start the query string
-            if (uri.Query == string.Empty)
-            {
-                uri.Query = "?";
-
-                // isFirstParam becomes true because the query string is new
-                isFirstParam = true;
-            }
-
-            // Iterate through options object and get the key=value pairs
-            foreach (PropertyInfo propertyInfo in options.GetType().GetProperties())
-            {
-                // If key:null ignore it
-                if (propertyInfo.GetValue(options, null) == null)
-                    continue;
-
-                var key = propertyInfo.Name;
-                var value = propertyInfo.GetValue(options, null);
-
-                // if we got another object (Daily, Hourly) skip it
-                if (propertyInfo.PropertyType.IsClass && propertyInfo.PropertyType != typeof(string))
-                    continue;
-                // If value is an empty string ignore it
-                if (propertyInfo.PropertyType == typeof(string))
-                    if ((string)propertyInfo.GetValue(options, null) == string.Empty)
-                        continue;
-
-                // The first parameter starts without "&"
-                if (isFirstParam)
-                {
-                    paramToAdd = key + "=" + value;
-                    isFirstParam = false;
-                }
-                else
-                {
-                    paramToAdd = "&" + key + "=" + value;
-                }
-
-                // concatenate the string to query string
-                uri.Query += paramToAdd;
-            }
-
-            // Now add the classes Daily & Hourly
-
-            // Check that Daily is not empty
-            if (options.Daily.Count > 0)
-            {
-                // Add the parameters to query string.
-                // (This CAN'T be the first paramter because latitude and longitude are required and already added)
-                // So we do not need an additional check here
-                uri.Query += "&daily=" + string.Join(",", options.Daily);
-            }
-
-            // Finally add Hourly
-            if (options.Hourly.Count > 0)
-            {
-                uri.Query += "&hourly=" + string.Join(",", options.Hourly);
-            }
-
-            // Finally return the whole url in lowercase
-            return uri.ToString().ToLower();
-        }
-
         private string MergeUrlWithOptions(string url, WeatherForecastOptions? options)
         {
             if (options == null) return url;
@@ -544,6 +416,30 @@ namespace OpenMeteo
                     }
                 }
             }
+
+            // 0.2.0 Weather models
+            // cell_selection
+            uri.Query += "&cell_selection=" + options.Cell_Selection;
+
+            // Models
+            if (options.Models.Count > 0)
+            {
+                bool firstModelsElement = true;
+                uri.Query += "&models=";
+                foreach (var option in options.Models)
+                {
+                    if (firstModelsElement)
+                    {
+                        uri.Query += option.ToString();
+                        firstModelsElement = false;
+                    }
+                    else
+                    {
+                        uri.Query += "," + option.ToString();
+                    }
+                }
+            }
+
             return uri.ToString();
         }
 

@@ -20,62 +20,23 @@ namespace OpenMeteo
 
         public bool IsReadOnly => false;
 
-        [Obsolete]
-        private static readonly string[] _allHourlyParams = new string[]
-        {
-            "temperature_2m",
-            "relativehumidity_2m",
-            "dewpoint_2m",
-            "apparent_temperature",
-            "pressure_msl",
-            "cloudcover",
-            "cloudcover_low",
-            "cloudcover_mid",
-            "cloudcover_high",
-            "windspeed_10m",
-            "windspeed_80m",
-            "windspeed_120m",
-            "windspeed_180m",
-            "winddirection_10m",
-            "winddirection_80m",
-            "winddirection_120m",
-            "winddirection_180m",
-            "windgusts_10m",
-            "shortwave_radiation",
-            "direct_radiation",
-            "diffuse_radiation",
-            "vapor_pressure_deficit",
-            "evapotranspiration",
-            "precipitation",
-            "weathercode",
-            "snow_height",
-            "freezinglevel_height",
-            "soil_temperature_0cm",
-            "soil_temperature_6cm",
-            "soil_temperature_18cm",
-            "soil_temperature_54cm",
-            "soil_moisture_0_1cm",
-            "soil_moisture_1_3cm",
-            "soil_moisture_3_9cm",
-            "soil_moisture_9_27cm",
-            "soil_moisture_27_81cm"
-        };
-
-        private readonly List<HourlyOptionsParameter> _parameter = new List<HourlyOptionsParameter>();
+        private readonly List<HourlyOptionsParameter> _parameter;
 
         public HourlyOptions(HourlyOptionsParameter parameter)
         {
+            _parameter = new List<HourlyOptionsParameter>();
             Add(parameter);
         }
 
         public HourlyOptions(HourlyOptionsParameter[] parameter)
         {
+            _parameter = new List<HourlyOptionsParameter>();
             Add(parameter);
         }
 
         public HourlyOptions()
         {
-
+            _parameter = new List<HourlyOptionsParameter>();
         }
 
         public HourlyOptionsParameter this[int index]
@@ -89,14 +50,6 @@ namespace OpenMeteo
 
         public void Add(HourlyOptionsParameter param)
         {
-            // Each enum variable represents an integer starting with 0.
-            // So we can use our static string[] to get the string representation
-
-            // Make sure we aren't our of array
-            //if ((int)param < 0 || (int)param >= _allHourlyParams.Length) return false;
-
-            //string paramToAdd = _allHourlyParams[(int)param];
-
             // Check that the parameter isn't already added
             if (this._parameter.Contains(param)) return;
 
@@ -109,19 +62,6 @@ namespace OpenMeteo
             {
                 Add(paramToAdd);
             }
-        }
-
-        [Obsolete]
-        private bool IsValidParameter(string s)
-        {
-            bool found = false;
-            foreach (string str in _allHourlyParams)
-            {
-                if (found) break;
-                if (s == str)
-                    found = true;
-            }
-            return found;
         }
 
         public IEnumerator<HourlyOptionsParameter> GetEnumerator()
@@ -154,28 +94,6 @@ namespace OpenMeteo
             return _parameter.Remove(item);
         }
 
-        [Obsolete]
-        public HourlyOptionsParameter? HourlyOptionsStringToEnum(string option)
-        {
-            if (!IsValidParameter(option)) return null;
-
-            HourlyOptionsParameter toFind;
-
-            // Get array index of valid parameter == (int)enum
-            int index = Array.IndexOf(_allHourlyParams, option);
-
-            // Again check that we found an index
-            // (double check bc option we checked that option is a valid param already)
-            if (index == -1) return null;
-
-            // Check that index is defined in enum
-            if (!Enum.IsDefined(typeof(DailyOptionsParameter), index)) return null;
-
-            toFind = (HourlyOptionsParameter)index;
-
-            // Return enum value
-            return toFind;
-        }
     }
 
     // This is converted to string so it has to be the exact same name like in 
@@ -199,9 +117,11 @@ namespace OpenMeteo
         cloudcover_low,
         cloudcover_mid,
         cloudcover_high,
+        visibility,
         evapotranspiration,
         et0_fao_evapotranspiration,
         vapor_pressure_deficit,
+        cape,
         windspeed_10m,
         windspeed_80m,
         windspeed_120m,
@@ -211,6 +131,9 @@ namespace OpenMeteo
         winddirection_120m,
         winddirection_180m,
         windgusts_10m,
+        temperature_80m,
+        temperature_120m,
+        temperature_180m,
         soil_temperature_0cm,
         soil_temperature_6cm,
         soil_temperature_18cm,
@@ -230,8 +153,6 @@ namespace OpenMeteo
         diffuse_radiation_instant,
         direct_normal_irradiance_instant,
         terrestrial_radiation_instant,
-
-        // Open-Meteo Version 0.0.74 - Pressure Levels
         temperature_1000hPa,
         temperature_975hPa,
         temperature_950hPa,
@@ -251,119 +172,119 @@ namespace OpenMeteo
         temperature_70hPa,
         temperature_50hPa,
         temperature_30hPa,
-        dewpoint_1000hPa, 
-        dewpoint_975hPa, 
-        dewpoint_950hPa, 
-        dewpoint_925hPa, 
-        dewpoint_900hPa, 
-        dewpoint_850hPa, 
-        dewpoint_800hPa, 
-        dewpoint_700hPa, 
-        dewpoint_600hPa, 
-        dewpoint_500hPa, 
-        dewpoint_400hPa, 
-        dewpoint_300hPa, 
-        dewpoint_250hPa, 
-        dewpoint_200hPa, 
-        dewpoint_150hPa, 
-        dewpoint_100hPa, 
-        dewpoint_70hPa, 
-        dewpoint_50hPa, 
-        dewpoint_30hPa, 
-        relativehumidity_1000hPa, 
-        relativehumidity_975hPa, 
-        relativehumidity_950hPa, 
-        relativehumidity_925hPa, 
-        relativehumidity_900hPa, 
-        relativehumidity_850hPa, 
-        relativehumidity_800hPa, 
-        relativehumidity_700hPa, 
-        relativehumidity_600hPa, 
-        relativehumidity_500hPa, 
-        relativehumidity_400hPa, 
-        relativehumidity_300hPa, 
-        relativehumidity_250hPa, 
-        relativehumidity_200hPa, 
-        relativehumidity_150hPa, 
-        relativehumidity_100hPa, 
-        relativehumidity_70hPa, 
-        relativehumidity_50hPa, 
-        relativehumidity_30hPa, 
-        cloudcover_1000hPa, 
-        cloudcover_975hPa, 
-        cloudcover_950hPa, 
-        cloudcover_925hPa, 
-        cloudcover_900hPa, 
-        cloudcover_850hPa, 
-        cloudcover_800hPa, 
-        cloudcover_700hPa, 
-        cloudcover_600hPa, 
-        cloudcover_500hPa, 
-        cloudcover_400hPa, 
-        cloudcover_300hPa, 
-        cloudcover_250hPa, 
-        cloudcover_200hPa, 
-        cloudcover_150hPa, 
-        cloudcover_100hPa, 
-        cloudcover_70hPa, 
-        cloudcover_50hPa, 
-        cloudcover_30hPa, 
-        windspeed_1000hPa, 
-        windspeed_975hPa, 
-        windspeed_950hPa, 
-        windspeed_925hPa, 
-        windspeed_900hPa, 
-        windspeed_850hPa, 
-        windspeed_800hPa, 
-        windspeed_700hPa, 
-        windspeed_600hPa, 
-        windspeed_500hPa, 
-        windspeed_400hPa, 
-        windspeed_300hPa, 
-        windspeed_250hPa, 
-        windspeed_200hPa, 
-        windspeed_150hPa, 
-        windspeed_100hPa, 
-        windspeed_70hPa, 
-        windspeed_50hPa, 
-        windspeed_30hPa, 
-        winddirection_1000hPa, 
-        winddirection_975hPa, 
-        winddirection_950hPa, 
-        winddirection_925hPa, 
-        winddirection_900hPa, 
-        winddirection_850hPa, 
-        winddirection_800hPa, 
-        winddirection_700hPa, 
-        winddirection_600hPa, 
-        winddirection_500hPa, 
-        winddirection_400hPa, 
-        winddirection_300hPa, 
-        winddirection_250hPa, 
-        winddirection_200hPa, 
-        winddirection_150hPa, 
-        winddirection_100hPa, 
-        winddirection_70hPa, 
-        winddirection_50hPa, 
-        winddirection_30hPa, 
-        geopotential_height_1000hPa, 
-        geopotential_height_975hPa, 
-        geopotential_height_950hPa, 
-        geopotential_height_925hPa, 
-        geopotential_height_900hPa, 
-        geopotential_height_850hPa, 
-        geopotential_height_800hPa, 
-        geopotential_height_700hPa, 
-        geopotential_height_600hPa, 
-        geopotential_height_500hPa, 
-        geopotential_height_400hPa, 
-        geopotential_height_300hPa, 
-        geopotential_height_250hPa, 
-        geopotential_height_200hPa, 
-        geopotential_height_150hPa, 
-        geopotential_height_100hPa, 
-        geopotential_height_70hPa, 
-        geopotential_height_50hPa, 
+        dewpoint_1000hPa,
+        dewpoint_975hPa,
+        dewpoint_950hPa,
+        dewpoint_925hPa,
+        dewpoint_900hPa,
+        dewpoint_850hPa,
+        dewpoint_800hPa,
+        dewpoint_700hPa,
+        dewpoint_600hPa,
+        dewpoint_500hPa,
+        dewpoint_400hPa,
+        dewpoint_300hPa,
+        dewpoint_250hPa,
+        dewpoint_200hPa,
+        dewpoint_150hPa,
+        dewpoint_100hPa,
+        dewpoint_70hPa,
+        dewpoint_50hPa,
+        dewpoint_30hPa,
+        relativehumidity_1000hPa,
+        relativehumidity_975hPa,
+        relativehumidity_950hPa,
+        relativehumidity_925hPa,
+        relativehumidity_900hPa,
+        relativehumidity_850hPa,
+        relativehumidity_800hPa,
+        relativehumidity_700hPa,
+        relativehumidity_600hPa,
+        relativehumidity_500hPa,
+        relativehumidity_400hPa,
+        relativehumidity_300hPa,
+        relativehumidity_250hPa,
+        relativehumidity_200hPa,
+        relativehumidity_150hPa,
+        relativehumidity_100hPa,
+        relativehumidity_70hPa,
+        relativehumidity_50hPa,
+        relativehumidity_30hPa,
+        cloudcover_1000hPa,
+        cloudcover_975hPa,
+        cloudcover_950hPa,
+        cloudcover_925hPa,
+        cloudcover_900hPa,
+        cloudcover_850hPa,
+        cloudcover_800hPa,
+        cloudcover_700hPa,
+        cloudcover_600hPa,
+        cloudcover_500hPa,
+        cloudcover_400hPa,
+        cloudcover_300hPa,
+        cloudcover_250hPa,
+        cloudcover_200hPa,
+        cloudcover_150hPa,
+        cloudcover_100hPa,
+        cloudcover_70hPa,
+        cloudcover_50hPa,
+        cloudcover_30hPa,
+        windspeed_1000hPa,
+        windspeed_975hPa,
+        windspeed_950hPa,
+        windspeed_925hPa,
+        windspeed_900hPa,
+        windspeed_850hPa,
+        windspeed_800hPa,
+        windspeed_700hPa,
+        windspeed_600hPa,
+        windspeed_500hPa,
+        windspeed_400hPa,
+        windspeed_300hPa,
+        windspeed_250hPa,
+        windspeed_200hPa,
+        windspeed_150hPa,
+        windspeed_100hPa,
+        windspeed_70hPa,
+        windspeed_50hPa,
+        windspeed_30hPa,
+        winddirection_1000hPa,
+        winddirection_975hPa,
+        winddirection_950hPa,
+        winddirection_925hPa,
+        winddirection_900hPa,
+        winddirection_850hPa,
+        winddirection_800hPa,
+        winddirection_700hPa,
+        winddirection_600hPa,
+        winddirection_500hPa,
+        winddirection_400hPa,
+        winddirection_300hPa,
+        winddirection_250hPa,
+        winddirection_200hPa,
+        winddirection_150hPa,
+        winddirection_100hPa,
+        winddirection_70hPa,
+        winddirection_50hPa,
+        winddirection_30hPa,
+        geopotential_height_1000hPa,
+        geopotential_height_975hPa,
+        geopotential_height_950hPa,
+        geopotential_height_925hPa,
+        geopotential_height_900hPa,
+        geopotential_height_850hPa,
+        geopotential_height_800hPa,
+        geopotential_height_700hPa,
+        geopotential_height_600hPa,
+        geopotential_height_500hPa,
+        geopotential_height_400hPa,
+        geopotential_height_300hPa,
+        geopotential_height_250hPa,
+        geopotential_height_200hPa,
+        geopotential_height_150hPa,
+        geopotential_height_100hPa,
+        geopotential_height_70hPa,
+        geopotential_height_50hPa,
         geopotential_height_30hPa
     }
 }

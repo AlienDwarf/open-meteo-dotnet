@@ -76,7 +76,9 @@ namespace OpenMeteoTests
                 TimeformatType.iso8601, 
                 0,
                 "2022-08-30",
-                "2022-08-31"
+                "2022-08-31",
+                null,
+                CellSelectionType.nearest
                 );
 
             var res = await client.QueryAsync("Tokyo", options);
@@ -91,7 +93,8 @@ namespace OpenMeteoTests
             WeatherForecastOptions options = new()
             {
                 Hourly = HourlyOptions.All,
-                Daily = DailyOptions.All
+                Daily = DailyOptions.All,
+                Models = WeatherModelOptions.All
             };
 
             var res = await client.QueryAsync(options);
@@ -101,6 +104,7 @@ namespace OpenMeteoTests
             Assert.IsNotNull(res.Hourly_units);
             Assert.IsNotNull(res.Daily);
             Assert.IsNotNull(res.Daily_units);
+            Assert.IsNotNull(res.Hourly.Cloudcover_1000hPa_best_match);
         }
 
         [TestMethod]

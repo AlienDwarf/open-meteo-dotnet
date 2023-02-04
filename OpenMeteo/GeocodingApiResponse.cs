@@ -17,8 +17,9 @@ namespace OpenMeteo
         public LocationData[]? Locations { get; set; }
 
         /// <summary>
-        /// Generation time of the weather forecast in milliseconds.
+        /// Generation time of the response in milliseconds.
         /// </summary>
-        public float Generationtime_ms { get; set; }
+        [JsonPropertyName("generationtime_ms")]
+        public float GenerationTime { get; set; }
     }
 }
