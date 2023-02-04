@@ -416,6 +416,30 @@ namespace OpenMeteo
                     }
                 }
             }
+
+            // 0.2.0 Weather models
+            // cell_selection
+            uri.Query += "&cell_selection=" + options.Cell_Selection;
+
+            // Models
+            if (options.Models.Count > 0)
+            {
+                bool firstModelsElement = true;
+                uri.Query += "&models=";
+                foreach (var option in options.Models)
+                {
+                    if (firstModelsElement)
+                    {
+                        uri.Query += option.ToString();
+                        firstModelsElement = false;
+                    }
+                    else
+                    {
+                        uri.Query += "," + option.ToString();
+                    }
+                }
+            }
+
             return uri.ToString();
         }
 

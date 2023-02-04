@@ -32,12 +32,18 @@ namespace OpenMeteo
         public PrecipitationUnitType Precipitation_Unit { get; set; }
 
         /// <summary>
+        /// Default is "land". Other options: "sea": prefers grid-cells on sea level, "nearest": nearest grid cell
+        /// </summary>
+        public CellSelectionType Cell_Selection { get; set; }
+
+        /// <summary>
         /// Default is "GMT". Any time zone name from the time zone database is supported.
         /// </summary>
         public string Timezone { get; set; }
 
         public HourlyOptions Hourly { get { return _hourly; } set { if (value != null) _hourly = value; } }
         public DailyOptions Daily { get { return _daily; } set { if (value != null) _daily = value; } }
+        public WeatherModelOptions Models { get { return _models; } set { if (value != null) _models = value; } }
 
         /// <summary>
         /// Default is "true".
@@ -74,8 +80,9 @@ namespace OpenMeteo
 
         private HourlyOptions _hourly = new HourlyOptions();
         private DailyOptions _daily = new DailyOptions();
+        private WeatherModelOptions _models = new WeatherModelOptions();
 
-        public WeatherForecastOptions(float latitude, float longitude, TemperatureUnitType temperature_Unit, WindspeedUnitType windspeed_Unit, PrecipitationUnitType precipitation_Unit, string timezone, HourlyOptions hourly, DailyOptions daily, bool current_Weather, TimeformatType timeformat, int past_Days, string start_date, string end_date)
+        public WeatherForecastOptions(float latitude, float longitude, TemperatureUnitType temperature_Unit, WindspeedUnitType windspeed_Unit, PrecipitationUnitType precipitation_Unit, string timezone, HourlyOptions hourly, DailyOptions daily, bool current_Weather, TimeformatType timeformat, int past_Days, string start_date, string end_date, WeatherModelOptions models, CellSelectionType cell_selection)
         {
             Latitude = latitude;
             Longitude = longitude;
@@ -88,12 +95,15 @@ namespace OpenMeteo
                 Hourly = hourly;
             if (daily != null)
                 Daily = daily;
+            if (models != null)
+                Models = models;
 
             Current_Weather = current_Weather;
             Timeformat = timeformat;
             Past_Days = past_Days;
             Start_date = start_date;
             End_date = end_date;
+            Cell_Selection = cell_selection;
         }
         public WeatherForecastOptions(float latitude, float longitude)
         {
@@ -103,6 +113,7 @@ namespace OpenMeteo
             Windspeed_Unit = WindspeedUnitType.kmh;
             Precipitation_Unit = PrecipitationUnitType.mm;
             Timeformat = TimeformatType.iso8601;
+            Cell_Selection = CellSelectionType.land;
             Timezone = "GMT";
             Current_Weather = true;
             Start_date = string.Empty;
@@ -116,6 +127,7 @@ namespace OpenMeteo
             Windspeed_Unit = WindspeedUnitType.kmh;
             Precipitation_Unit = PrecipitationUnitType.mm;
             Timeformat = TimeformatType.iso8601;
+            Cell_Selection = CellSelectionType.land;
             Timezone = "GMT";
             Current_Weather = true;
             Start_date = string.Empty;
@@ -147,5 +159,12 @@ namespace OpenMeteo
     {
         iso8601,
         unixtime
+    }
+
+    public enum CellSelectionType
+    {
+        land,
+        sea,
+        nearest
     }
 }
