@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenMeteo;
 
@@ -24,14 +26,31 @@ namespace OpenMeteoTests
         {
             OpenMeteoClient client = new OpenMeteoClient();
             
-            WeatherForecast weatherData = await client.QueryAsync(1f, 2f);
+            WeatherForecast weatherData = await client.QueryAsync(1.125f, 2.25f);
 
             Assert.IsNotNull(weatherData);
             Assert.IsNotNull(weatherData.Longitude);
             Assert.IsNotNull(weatherData.Latitude);
 
-            Assert.AreEqual(1f, weatherData.Latitude);
-            Assert.AreEqual(2f, weatherData.Longitude);
+            Assert.AreEqual(1.125f, weatherData.Latitude);
+            Assert.AreEqual(2.25f, weatherData.Longitude);
+        }
+
+        [TestMethod]
+        public async Task Latitude_Longitude_Test_With_French_Culture()
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("fr-FR");
+
+            OpenMeteoClient client = new OpenMeteoClient();
+            
+            WeatherForecast weatherData = await client.QueryAsync(1.125f, 2.25f);
+
+            Assert.IsNotNull(weatherData);
+            Assert.IsNotNull(weatherData.Longitude);
+            Assert.IsNotNull(weatherData.Latitude);
+
+            Assert.AreEqual(1.125f, weatherData.Latitude);
+            Assert.AreEqual(2.25f, weatherData.Longitude);
         }
 
         [TestMethod]

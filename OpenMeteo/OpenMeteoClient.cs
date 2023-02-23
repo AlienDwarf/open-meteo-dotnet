@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net.Http;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Globalization;
 
 namespace OpenMeteo
 {
@@ -15,7 +15,6 @@ namespace OpenMeteo
         private readonly string _geocodeApiUrl = "https://geocoding-api.open-meteo.com/v1/search";
         private readonly string _airQualityApiUrl = "https://air-quality-api.open-meteo.com/v1/air-quality";
         private readonly HttpController httpController;
-        private readonly System.Globalization.CultureInfo _culture;
 
         /// <summary>
         /// Creates a new <seealso cref="OpenMeteoClient"/> object and sets the neccessary variables (httpController, CultureInfo)
@@ -23,20 +22,6 @@ namespace OpenMeteo
         public OpenMeteoClient()
         {
             httpController = new HttpController();
-
-            // Used to parse floats with "." (many countries "," is standard when parsing float to string) when creating query string
-            _culture = System.Threading.Thread.CurrentThread.CurrentCulture;
-            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-            customCulture.NumberFormat.NumberDecimalSeparator = ".";
-            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
-        }
-
-        /// <summary>
-        /// Restores the original CultureInfo
-        /// </summary>
-        ~OpenMeteoClient()
-        {
-            System.Threading.Thread.CurrentThread.CurrentCulture = _culture;
         }
 
         /// <summary>
@@ -350,14 +335,14 @@ namespace OpenMeteo
             }
 
             // Add the properties
-
+            
             // Begin with Latitude and Longitude since they're required
             if (isFirstParam)
-                uri.Query += "latitude=" + options.Latitude;
+                uri.Query += "latitude=" +  options.Latitude.ToString(CultureInfo.InvariantCulture);
             else
-                uri.Query += "&latitude=" + options.Latitude;
+                uri.Query += "&latitude=" + options.Latitude.ToString(CultureInfo.InvariantCulture);
 
-            uri.Query += "&longitude=" + options.Longitude;
+            uri.Query += "&longitude=" + options.Longitude.ToString(CultureInfo.InvariantCulture);
 
             uri.Query += "&temperature_unit=" + options.Temperature_Unit.ToString();
             uri.Query += "&windspeed_unit=" + options.Windspeed_Unit.ToString();
