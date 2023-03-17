@@ -74,6 +74,19 @@ namespace OpenMeteo
             public string? Mugwort_pollen { get; set; }
             public string? Olive_pollen { get; set; }
             public string? Ragweed_pollen { get; set; }
+            public string? European_aqi { get; set; }
+            public string? European_aqi_pm2_5 { get; set; }
+            public string? European_aqi_pm10 { get; set; }
+            public string? European_aqi_no2 { get; set; }
+            public string? European_aqi_o3 { get; set; }
+            public string? European_aqi_so2 { get; set; }
+            public string? Us_aqi { get; set; }
+            public string? Us_aqi_pm2_5 { get; set; }
+            public string? Us_aqi_pm10 { get; set; }
+            public string? Us_aqi_no2 { get; set; }
+            public string? Us_aqi_o3 { get; set; }
+            public string? Us_aqi_so2 { get; set; }
+            public string? Us_aqi_co { get; set; }
         }
 
         public class HourlyValues
@@ -119,6 +132,19 @@ namespace OpenMeteo
             /// Only available in Europe during pollen season with 4 days forecast
             /// </summary>
             public float?[]? Ragweed_pollen { get; set; }
+            public float?[]? European_aqi { get; set; }
+            public float?[]? European_aqi_pm2_5 { get; set; }
+            public float?[]? European_aqi_pm10 { get; set; }
+            public float?[]? European_aqi_no2 { get; set; }
+            public float?[]? European_aqi_o3 { get; set; }
+            public float?[]? European_aqi_so2 { get; set; }
+            public float?[]? Us_aqi { get; set; }
+            public float?[]? Us_aqi_pm2_5 { get; set; }
+            public float?[]? Us_aqi_pm10 { get; set; }
+            public float?[]? Us_aqi_no2 { get; set; }
+            public float?[]? Us_aqi_o3 { get; set; }
+            public float?[]? Us_aqi_so2 { get; set; }
+            public float?[]? Us_aqi_co { get; set; }
         }
     }
 }
