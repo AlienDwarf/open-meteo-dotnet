@@ -194,7 +194,20 @@ namespace OpenMeteo
             grass_pollen, 
             mugwort_pollen, 
             olive_pollen, 
-            ragweed_pollen
+            ragweed_pollen,
+            european_aqi,
+            european_aqi_pm2_5,
+            european_aqi_pm10,
+            european_aqi_no2,
+            european_aqi_o3,
+            european_aqi_so2,
+            us_aqi,
+            us_aqi_pm2_5,
+            us_aqi_pm10,
+            us_aqi_no2,
+            us_aqi_o3,
+            us_aqi_so2,
+            us_aqi_co
         }
     }
 }

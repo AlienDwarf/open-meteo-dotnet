@@ -488,11 +488,11 @@ namespace OpenMeteo
 
             // Now we check every property and set the value, if neccessary
             if (isFirstParam)
-                uri.Query += "latitude=" + options.Latitude;
+                uri.Query += "latitude=" + options.Latitude.ToString(CultureInfo.InvariantCulture);
             else
-                uri.Query += "&latitude=" + options.Latitude;
+                uri.Query += "&latitude=" + options.Latitude.ToString(CultureInfo.InvariantCulture);
 
-            uri.Query += "&longitude=" + options.Longitude;
+            uri.Query += "&longitude=" + options.Longitude.ToString(CultureInfo.InvariantCulture);
 
             if (options.Domains != string.Empty)
                 uri.Query += "&domains=" + options.Domains;
