@@ -285,6 +285,11 @@ namespace OpenMeteo
         geopotential_height_100hPa,
         geopotential_height_70hPa,
         geopotential_height_50hPa,
-        geopotential_height_30hPa
+        geopotential_height_30hPa,
+        is_day,
+        uv_index,
+        uv_index_clear_sky,
+        precipitation_probability
+
     }
 }

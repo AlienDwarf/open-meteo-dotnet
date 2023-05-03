@@ -2290,5 +2290,9 @@ namespace OpenMeteo
         public float?[]? Geopotential_height_70hPa_meteofrance_arpege_world { get; set; }
         public float?[]? Geopotential_height_50hPa_meteofrance_arpege_world { get; set; }
         public float?[]? Geopotential_height_30hPa_meteofrance_arpege_world { get; set; }
+        public float?[]? Uv_index { get; set; }
+        public float?[]? Uv_index_clear_sky { get; set; }
+        public bool?[]? Is_day { get; set; }
+        public int?[]? Precipitation_probability { get; set; }
     }
 }
