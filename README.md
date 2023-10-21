@@ -60,7 +60,7 @@ static async Task RunAsync()
     WeatherForecast weatherData = await client.QueryAsync("Tokyo");
 
     // Output the current weather to console
-    Console.WriteLine("Weather in Tokyo: " + weatherData.CurrentWeather.Temperature + "°C");
+    Console.WriteLine("Weather in Tokyo: " + weatherData.Current.Temperature + weatherData.CurrentUnits.Temperature);
     
     // Output: "Weather in Tokyo: 28.1°C
 }
