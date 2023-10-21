@@ -46,10 +46,11 @@ namespace OpenMeteo
         public WeatherModelOptions Models { get { return _models; } set { if (value != null) _models = value; } }
 
         /// <summary>
-        /// Default is "true".
+        /// Default is an empty string array.
         /// Include current weather conditions in API response.
         /// </summary>
-        public bool Current_Weather { get; set; }
+        public CurrentOptions Current { get { return _current; } set { if (value != null) _current = value; } }
+        public Minutely15Options Minutely15 { get { return _minutely15; } set { if (value != null) _minutely15 = value; } }
 
         /// <summary>
         /// Default is "iso8601". Other options: "unixtime". 
@@ -81,8 +82,10 @@ namespace OpenMeteo
         private HourlyOptions _hourly = new HourlyOptions();
         private DailyOptions _daily = new DailyOptions();
         private WeatherModelOptions _models = new WeatherModelOptions();
+        private CurrentOptions _current = new CurrentOptions();
+        private Minutely15Options _minutely15 = new Minutely15Options();
 
-        public WeatherForecastOptions(float latitude, float longitude, TemperatureUnitType temperature_Unit, WindspeedUnitType windspeed_Unit, PrecipitationUnitType precipitation_Unit, string timezone, HourlyOptions hourly, DailyOptions daily, bool current_Weather, TimeformatType timeformat, int past_Days, string start_date, string end_date, WeatherModelOptions models, CellSelectionType cell_selection)
+        public WeatherForecastOptions(float latitude, float longitude, TemperatureUnitType temperature_Unit, WindspeedUnitType windspeed_Unit, PrecipitationUnitType precipitation_Unit, string timezone, HourlyOptions hourly, DailyOptions daily, CurrentOptions current, Minutely15Options minutely15, TimeformatType timeformat, int past_Days, string start_date, string end_date, WeatherModelOptions models, CellSelectionType cell_selection)
         {
             Latitude = latitude;
             Longitude = longitude;
@@ -97,8 +100,11 @@ namespace OpenMeteo
                 Daily = daily;
             if (models != null)
                 Models = models;
+            if (current != null)
+                Current = current;
+            if (minutely15 != null)
+                Minutely15 = minutely15;
 
-            Current_Weather = current_Weather;
             Timeformat = timeformat;
             Past_Days = past_Days;
             Start_date = start_date;
@@ -115,7 +121,7 @@ namespace OpenMeteo
             Timeformat = TimeformatType.iso8601;
             Cell_Selection = CellSelectionType.land;
             Timezone = "GMT";
-            Current_Weather = true;
+            
             Start_date = string.Empty;
             End_date = string.Empty;
         }
@@ -129,7 +135,7 @@ namespace OpenMeteo
             Timeformat = TimeformatType.iso8601;
             Cell_Selection = CellSelectionType.land;
             Timezone = "GMT";
-            Current_Weather = true;
+            
             Start_date = string.Empty;
             End_date = string.Empty;
         }
