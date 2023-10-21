@@ -42,7 +42,8 @@ namespace OpenMeteo
             {
                 Latitude = response.Locations[0].Latitude,
                 Longitude = response.Locations[0].Longitude,
-                Current_Weather = true
+                Current = CurrentOptions.All // Get all current weather data if nothing else is provided
+                
             };
 
             return await GetWeatherForecastAsync(options);
@@ -64,7 +65,8 @@ namespace OpenMeteo
             {
                 Latitude = response.Locations[0].Latitude,
                 Longitude = response.Locations[0].Longitude,
-                Current_Weather = true
+                Current = CurrentOptions.All // Get all current weather data if nothing else is provided
+                
             };
 
             return await GetWeatherForecastAsync(weatherForecastOptions);
@@ -99,7 +101,7 @@ namespace OpenMeteo
             {
                 Latitude = latitude,
                 Longitude = longitude,
-                Current_Weather = true
+                
             };
             return await QueryAsync(options);
         }
@@ -350,8 +352,6 @@ namespace OpenMeteo
             if (options.Timezone != string.Empty)
                 uri.Query += "&timezone=" + options.Timezone;
 
-            uri.Query += "&current_weather=" + options.Current_Weather;
-
             uri.Query += "&timeformat=" + options.Timeformat.ToString();
 
             uri.Query += "&past_days=" + options.Past_Days;
@@ -417,6 +417,44 @@ namespace OpenMeteo
                     {
                         uri.Query += option.ToString();
                         firstModelsElement = false;
+                    }
+                    else
+                    {
+                        uri.Query += "," + option.ToString();
+                    }
+                }
+            }
+
+            // new current parameter
+            if (options.Current.Count > 0)
+            {
+                bool firstCurrentElement = true;
+                uri.Query += "&current=";
+                foreach (var option in options.Current)
+                {
+                    if (firstCurrentElement)
+                    {
+                        uri.Query += option.ToString();
+                        firstCurrentElement = false;
+                    }
+                    else
+                    {
+                        uri.Query += "," + option.ToString();
+                    }
+                }
+            }
+
+            // new minutely_15 parameter
+            if (options.Minutely15.Count > 0)
+            {
+                bool firstMinutelyElement = true;
+                uri.Query += "&minutely_15=";
+                foreach (var option in options.Minutely15)
+                {
+                    if (firstMinutelyElement)
+                    {
+                        uri.Query += option.ToString();
+                        firstMinutelyElement = false;
                     }
                     else
                     {
