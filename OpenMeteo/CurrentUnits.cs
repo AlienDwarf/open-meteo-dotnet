@@ -10,6 +10,7 @@ namespace OpenMeteo
         public string? Time { get; set; }
         public string? Interval { get; set; }
         public string? Temperature_2m { get; set; }
+        public string? Temperature { get { return Temperature_2m; } private set { } }
         public string? Relativehumidity_2m { get; set; }
         public string? Apparent_temperature { get; set; }
         public string? Is_day { get; set; }
