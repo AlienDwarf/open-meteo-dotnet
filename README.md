@@ -7,7 +7,7 @@
 A .Net Standard library for the [Open-Meteo](https://open-meteo.com) API.
 ## ❕ Information
 
-1.0.0 is not compatible with lower versions like 0.2.x
+# 1.0.0 is not compatible with lower versions like 0.2.x!
 This project is still in development. There *will* be major changes in the codebase.
 
 ## 🎯 Roadmap
