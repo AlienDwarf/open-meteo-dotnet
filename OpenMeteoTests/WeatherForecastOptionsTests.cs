@@ -12,13 +12,17 @@ namespace OpenMeteoTests
             WeatherForecastOptions options = new();
 
             Assert.IsNotNull(options);
-            Assert.IsTrue(options.Current_Weather);
+            Assert.IsNotNull(options.Current);
             Assert.AreEqual(options.Latitude, 0f);
             Assert.AreEqual(options.Longitude, 0f);
             Assert.IsNotNull(options.Daily);
             Assert.IsNotNull(options.Hourly);
+            Assert.IsNotNull(options.Current);
+            Assert.IsNotNull(options.Minutely15);
             Assert.AreEqual(0, options.Daily.Parameter.Count);
             Assert.AreEqual(0, options.Hourly.Parameter.Count);
+            Assert.AreEqual(0, options.Current.Parameter.Count);
+            Assert.AreEqual(0, options.Minutely15.Parameter.Count);
         }
 
         [TestMethod]
@@ -29,7 +33,7 @@ namespace OpenMeteoTests
             Assert.IsNotNull(options);
             Assert.AreEqual(2.4f, options.Latitude);
             Assert.AreEqual(3.5f, options.Longitude);
-            Assert.IsTrue(options.Current_Weather);
+            Assert.IsNotNull(options.Current);
         }
 
         [TestMethod]
@@ -37,9 +41,8 @@ namespace OpenMeteoTests
         {
             WeatherForecastOptions options = new WeatherForecastOptions(
                 10.5f, 20.5f, TemperatureUnitType.fahrenheit, WindspeedUnitType.kmh, PrecipitationUnitType.mm, "auto",
-                new HourlyOptions(), new DailyOptions(), false, TimeformatType.iso8601, 1, "", "", new WeatherModelOptions(), CellSelectionType.land);
+                new HourlyOptions(), new DailyOptions(), new CurrentOptions(), new Minutely15Options(), TimeformatType.iso8601, 1, "", "", new WeatherModelOptions(), CellSelectionType.land);
 
-            Assert.IsFalse(options.Current_Weather);
             Assert.AreEqual(10.5f, options.Latitude);
             Assert.AreEqual(20.5f, options.Longitude);
             Assert.AreEqual("kmh", options.Windspeed_Unit.ToString());
@@ -49,6 +52,8 @@ namespace OpenMeteoTests
             Assert.AreEqual("auto", options.Timezone.ToString());
             Assert.IsNotNull(options.Daily);
             Assert.IsNotNull(options.Hourly);
+            Assert.IsNotNull(options.Current);
+            Assert.IsNotNull(options.Minutely15);
             Assert.AreEqual(1, options.Past_Days);
             Assert.AreEqual(string.Empty, options.Start_date);
             Assert.AreEqual(string.Empty, options.End_date);
@@ -60,7 +65,7 @@ namespace OpenMeteoTests
         {
             WeatherForecastOptions options = new WeatherForecastOptions(
                 10.5f, 20.5f, TemperatureUnitType.fahrenheit, WindspeedUnitType.kmh, PrecipitationUnitType.mm, "auto",
-                new HourlyOptions(), new DailyOptions(), false, TimeformatType.iso8601, 1, "", "", new WeatherModelOptions(), CellSelectionType.land);
+                new HourlyOptions(), new DailyOptions(), new CurrentOptions(), new Minutely15Options(), TimeformatType.iso8601, 1, "", "", new WeatherModelOptions(), CellSelectionType.land);
 
             options.Daily.Add(DailyOptionsParameter.sunset);
             options.Daily.Add(DailyOptionsParameter.sunrise);

@@ -91,7 +91,8 @@ namespace OpenMeteoTests
                 "GMT", 
                 null, 
                 null, 
-                true, 
+                null,
+                null,
                 TimeformatType.iso8601, 
                 0,
                 "2022-08-30",
@@ -113,17 +114,21 @@ namespace OpenMeteoTests
             {
                 Hourly = HourlyOptions.All,
                 Daily = DailyOptions.All,
-                Models = WeatherModelOptions.All
+                Models = WeatherModelOptions.All,
+                Current = CurrentOptions.All,
+                Minutely15 = Minutely15Options.All
             };
 
             var res = await client.QueryAsync(options);
 
             Assert.IsNotNull(res);
             Assert.IsNotNull(res.Hourly);
-            Assert.IsNotNull(res.Hourly_units);
+            Assert.IsNotNull(res.HourlyUnits);
             Assert.IsNotNull(res.Daily);
-            Assert.IsNotNull(res.Daily_units);
+            Assert.IsNotNull(res.DailyUnits);
             Assert.IsNotNull(res.Hourly.Cloudcover_1000hPa_best_match);
+            Assert.IsNotNull(res.Current);
+            Assert.IsNotNull(res.Minutely15);
         }
 
         [TestMethod]
@@ -133,16 +138,20 @@ namespace OpenMeteoTests
             WeatherForecastOptions options = new()
             {
                 Hourly = HourlyOptions.All,
-                Daily = DailyOptions.All
+                Daily = DailyOptions.All,
+                Current = CurrentOptions.All,
+                Minutely15 = Minutely15Options.All,
             };
 
             var res = client.Query(options);
 
             Assert.IsNotNull(res);
             Assert.IsNotNull(res.Hourly);
-            Assert.IsNotNull(res.Hourly_units);
+            Assert.IsNotNull(res.HourlyUnits);
             Assert.IsNotNull(res.Daily);
-            Assert.IsNotNull(res.Daily_units);
+            Assert.IsNotNull(res.DailyUnits);
+            Assert.IsNotNull(res.Current);
+            Assert.IsNotNull(res.Minutely15);
         }
     }
 }
