@@ -5,7 +5,7 @@
 [![Nuget](https://img.shields.io/nuget/v/openmeteo.dotnet)](https://www.nuget.org/packages/OpenMeteo.dotnet)
 
 A .Net Standard library for the [Open-Meteo](https://open-meteo.com) API.
-# 1.0.0 is not compatible with lower versions like 0.2.x!
+# 2.0.0 is not compatible with lower versions like 0.2.x!
 
 ## ❕ Information
 
