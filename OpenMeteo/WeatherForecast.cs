@@ -57,15 +57,18 @@ namespace OpenMeteo
         /// Current weather conditions
         /// </summary>
 
-        [JsonPropertyName("current_weather")]
-        public CurrentWeather? CurrentWeather { get; set; }
+        [JsonPropertyName("current")]
+        public Current? Current { get; set; }
+
+        [JsonPropertyName("current_units")]
+        public CurrentUnits? CurrentUnits { get; set; }
 
         /// <summary>
         /// For each selected <see cref="HourlyOptionsParameter"/>, the unit will be listed here
         /// </summary>
 
         [JsonPropertyName("hourly_units")]
-        public HourlyUnits? Hourly_units { get; set; }
+        public HourlyUnits? HourlyUnits { get; set; }
 
         /// <summary>
         /// For each selected weather variable, data will be returned as a floating point array. 
@@ -80,7 +83,7 @@ namespace OpenMeteo
         /// </summary>
 
         [JsonPropertyName("daily_units")]
-        public Daily_Units? Daily_units { get; set; }
+        public DailyUnits? DailyUnits { get; set; }
 
         /// <summary>
         /// For each selected weather variable, data will be returned as a floating point array. 
@@ -89,6 +92,12 @@ namespace OpenMeteo
 
         [JsonPropertyName("daily")]
         public Daily? Daily { get; set; }
+
+        [JsonPropertyName("minutely_15")]
+        public Minutely15? Minutely15 { get; set; }
+
+        [JsonPropertyName("minutely_15_units")]
+        public Minutely15Units? Minutely15Units { get; set; }
     }
 }
 

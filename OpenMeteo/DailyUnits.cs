@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OpenMeteo
 {
-    public class Daily_Units
+    public class DailyUnits
     {
         public string? Time { get; set; }
         public string? Weathercode { get; set; }

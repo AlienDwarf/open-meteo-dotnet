@@ -5,6 +5,8 @@
 [![Nuget](https://img.shields.io/nuget/v/openmeteo.dotnet)](https://www.nuget.org/packages/OpenMeteo.dotnet)
 
 A .Net Standard library for the [Open-Meteo](https://open-meteo.com) API.
+# 1.0.0 is not compatible with lower versions like 0.2.x!
+
 ## ❕ Information
 
 This project is still in development. There *will* be major changes in the codebase.
@@ -60,7 +62,7 @@ static async Task RunAsync()
     WeatherForecast weatherData = await client.QueryAsync("Tokyo");
 
     // Output the current weather to console
-    Console.WriteLine("Weather in Tokyo: " + weatherData.CurrentWeather.Temperature + "°C");
+    Console.WriteLine("Weather in Tokyo: " + weatherData.Current.Temperature + weatherData.CurrentUnits.Temperature);
     
     // Output: "Weather in Tokyo: 28.1°C
 }
