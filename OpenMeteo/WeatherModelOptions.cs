@@ -104,6 +104,8 @@ namespace OpenMeteo
     { 
         best_match,
         ecmwf_ifs04,
+        ecmwf_ifs025,
+        ecmwf_aifs025,
         metno_nordic,
         gfs_seamless,
         gfs_global,
