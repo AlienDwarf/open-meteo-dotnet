@@ -14,6 +14,7 @@ namespace OpenMeteo
         private readonly string _weatherApiUrl = "https://api.open-meteo.com/v1/forecast";
         private readonly string _geocodeApiUrl = "https://geocoding-api.open-meteo.com/v1/search";
         private readonly string _airQualityApiUrl = "https://air-quality-api.open-meteo.com/v1/air-quality";
+        private readonly string _elevationApiUrl = "https://api.open-meteo.com/v1/elevation";
         private readonly HttpController httpController;
 
         /// <summary>
@@ -164,6 +165,19 @@ namespace OpenMeteo
             return (response.Locations[0].Latitude, response.Locations[0].Longitude);
         }
 
+        /// <summary>
+        /// Performs one GET-Request to Open-Meteo Elevation API 
+        /// </summary>
+        /// <param name="latitude">Latitude</param>
+        /// <param name="longitude">Longitude</param>
+        /// <returns></returns>
+        public async Task<ElevationApiResponse?> QueryElevationAsync(float latitude, float longitude)
+        {
+            ElevationOptions elevationOptions = new ElevationOptions(latitude, longitude);
+
+            return await GetElevationAsync(elevationOptions);
+        }
+
         public WeatherForecast? Query(WeatherForecastOptions options)
         {
             return QueryAsync(options).GetAwaiter().GetResult();
@@ -192,6 +206,11 @@ namespace OpenMeteo
         public AirQuality? Query(AirQualityOptions options)
         {
             return QueryAsync(options).GetAwaiter().GetResult();
+        }
+
+        public ElevationApiResponse? QueryElevation(float latitude, float longitude)
+        {
+            return QueryElevationAsync(latitude, longitude).GetAwaiter().GetResult();
         }
 
         private async Task<AirQuality?> GetAirQualityAsync(AirQualityOptions options)
@@ -315,6 +334,25 @@ namespace OpenMeteo
             catch (HttpRequestException e)
             {
                 Console.WriteLine("Can't find " + options.Name + ". Please make sure that the name is valid.");
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        private async Task<ElevationApiResponse?> GetElevationAsync(ElevationOptions options)
+        {
+            try
+            {
+                HttpResponseMessage response = await httpController.Client.GetAsync(MergeUrlWithOptions(_elevationApiUrl, options));
+                response.EnsureSuccessStatusCode();
+
+                ElevationApiResponse? elevationData = await JsonSerializer.DeserializeAsync<ElevationApiResponse>(await response.Content.ReadAsStreamAsync(), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+
+                return elevationData;
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine($"Can't find elevation for latitude {options.Latitude} & longitude {options.Longitude}. Please make sure that they are valid.");
                 Console.WriteLine(e.Message);
                 return null;
             }
@@ -560,6 +598,18 @@ namespace OpenMeteo
                     }
                 }
             }
+
+            return uri.ToString();
+        }
+
+        private string MergeUrlWithOptions(string url, ElevationOptions options)
+        {
+            if (options == null) return url;
+
+            UriBuilder uri = new UriBuilder(url)
+            {
+                Query = $"?latitude={options.Latitude.ToString(CultureInfo.InvariantCulture)}&longitude={options.Longitude.ToString(CultureInfo.InvariantCulture)}"
+            };
 
             return uri.ToString();
         }
