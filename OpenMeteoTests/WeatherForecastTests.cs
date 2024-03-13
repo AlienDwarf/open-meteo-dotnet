@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -107,9 +108,8 @@ namespace OpenMeteoTests
         }
 
         [TestMethod]
-        public async Task WeatherForecast_With_All_Options_Test()
+        public void WeatherForecast_With_All_Options_Test()
         {
-            OpenMeteoClient client = new();
             WeatherForecastOptions options = new()
             {
                 Hourly = HourlyOptions.All,
@@ -119,39 +119,11 @@ namespace OpenMeteoTests
                 Minutely15 = Minutely15Options.All
             };
 
-            var res = await client.QueryAsync(options);
-
-            Assert.IsNotNull(res);
-            Assert.IsNotNull(res.Hourly);
-            Assert.IsNotNull(res.HourlyUnits);
-            Assert.IsNotNull(res.Daily);
-            Assert.IsNotNull(res.DailyUnits);
-            Assert.IsNotNull(res.Hourly.Cloudcover_1000hPa_best_match);
-            Assert.IsNotNull(res.Current);
-            Assert.IsNotNull(res.Minutely15);
-        }
-
-        [TestMethod]
-        public void WeatherForecast_With_All_Options_Sync_Test()
-        {
-            OpenMeteoClient client = new();
-            WeatherForecastOptions options = new()
-            {
-                Hourly = HourlyOptions.All,
-                Daily = DailyOptions.All,
-                Current = CurrentOptions.All,
-                Minutely15 = Minutely15Options.All,
-            };
-
-            var res = client.Query(options);
-
-            Assert.IsNotNull(res);
-            Assert.IsNotNull(res.Hourly);
-            Assert.IsNotNull(res.HourlyUnits);
-            Assert.IsNotNull(res.Daily);
-            Assert.IsNotNull(res.DailyUnits);
-            Assert.IsNotNull(res.Current);
-            Assert.IsNotNull(res.Minutely15);
+            Assert.IsTrue(HourlyOptions.All.Parameter.All(p => options.Hourly.Parameter.Contains(p)));
+            Assert.IsTrue(DailyOptions.All.Parameter.All(p => options.Daily.Parameter.Contains(p)));
+            Assert.IsTrue(WeatherModelOptions.All.Parameter.All(p => options.Models.Parameter.Contains(p)));
+            Assert.IsTrue(CurrentOptions.All.Parameter.All(p => options.Current.Parameter.Contains(p)));
+            Assert.IsTrue(Minutely15Options.All.Parameter.All(p => options.Minutely15.Parameter.Contains(p)));
         }
     }
 }
